@@ -7,63 +7,45 @@ Dec. 12th 2013
 #include <stdio.h>
 #include <math.h>
 #include <malloc.h>
+#include <vector>
+#include <iostream>
+#include <iomanip>
+using namespace std;
 
 
+// Parámetros del archivo con las funciones
 void cec14_test_func(double *, double *,int,int,int);
-
 double *OShift,*M,*y,*z,*x_bound;
 int ini_flag=0,n_flag,func_flag,*SS;
 
 
+// Dimensión en la que estamos trabajando
+int n = 10;
+int func_num = 1;
+
+
+double fitness(vector<double> x){
+	double result;
+	cec14_test_func(&x[0], &result, n, 1, func_num);
+	return result;
+}
+
+
 int main(){
-	int i,j,k,n,m,func_num;
-	double *f,*x;
-	FILE *fpt;
-	char FileName[30];
-	m=2;
-	n=10;
-	x=(double *)malloc(m*n*sizeof(double));
-	f=(double *)malloc(sizeof(double)  *  m);
+	// Fijamos la precisión de impresión
+	std::cout << std::fixed;
+    std::cout << std::setprecision(6);
 
-	for (i = 0; i < 30; i++){
-		func_num=i+1;
-		sprintf(FileName, "input_data/shift_data_%d.txt", func_num);
-		fpt = fopen(FileName,"r");
+	vector<double> x(n);
 
-		if (fpt==NULL){
-			printf("\n Error: Cannot open input file for reading \n");
-		}
-
-		if (x==NULL)
-			printf("\nError: there is insufficient memory available!\n");
-
-		for(k=0;k<n;k++){
-			fscanf(fpt,"%lf",&x[k]);
-			/*printf("%lf\n",x[k]);*/
-		}
-
-		fclose(fpt);
-
-		for (j = 0; j < n; j++)
-		{
-			x[1*n+j]=0.0;
-			/*printf("%lf\n",x[1*n+j]);*/
-		}
+	for (int j = 0; j < n; j++)
+		x[j]=0.0;
 
 
-		for (k = 0; k < 1; k++)
-		{
-			cec14_test_func(x, f, n,m,func_num);
-			for (j = 0; j < 2; j++)
-			{
-				printf(" f%d(x[%d]) = %lf,",func_num,j+1,f[j]);
-			}
-			printf("\n");
-		}
-
+	for (int k = 0; k < 1; k++){
+		cout << "f" << func_num << "(x[1]): " << fitness(x) << endl;
 	}
-	free(x);
-	free(f);
+
 	free(y);
 	free(z);
 	free(M);
