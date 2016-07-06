@@ -13,4 +13,18 @@ public:
         this->cation = cation;
         this->fvalue = fitness(position);
     }
+
+    //Ion(){}
+
+    bool isCation(){
+        return cation;
+    }
+
+    void updateFitness(){
+        fvalue = fitness(position);
+    }
+
+    void getFitness(){
+        return fvalue;
+    }
 };
