@@ -1,30 +1,22 @@
-#include <vector>
+#ifndef __ION_H__
+#define __ION_H__
 
+#include "aux.h"
 using namespace std;
-
 
 class Ion: public std::vector<double>{
 private:
     double fvalue;
-    bool cation;
 
 public:
-    Ion(std::vector<double> position, bool cation) : vector(position){
-        this->cation = cation;
-        this->fvalue = fitness(position);
-    }
+    Ion(std::vector<double> position);
 
-    //Ion(){}
+    Ion();
 
-    bool isCation(){
-        return cation;
-    }
+    void updateFitness();
 
-    void updateFitness(){
-        fvalue = fitness(position);
-    }
-
-    void getFitness(){
-        return fvalue;
-    }
+    double getFitness();
 };
+
+
+#endif

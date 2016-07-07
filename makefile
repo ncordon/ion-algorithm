@@ -2,10 +2,9 @@ BIN=./bin
 SRC=./src
 OBJ=./obj
 DATA=./data
-PLOT=./plots
-FIT=./regressionPlots
+INC=./include
 TEX=./tex
-FLAGS=-std=c++0x -Wall -lm -c
+FLAGS=-std=c++11 -lm -c -I $(INC)
 
 # make all: Compilar todos los programas
 all: main

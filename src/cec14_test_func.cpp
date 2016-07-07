@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <math.h>
 #include <malloc.h>
+#include "aux.h"
 
 #define INF 1.0e99
 #define EPS 1.0e-14
@@ -56,9 +57,6 @@ void sr_func (double *, double *, int, double*, double*, double, int, int); /* s
 void asyfunc (double *, double *x, int, double);
 void oszfunc (double *, double *, int);
 void cf_cal(double *, double *, int, double *,double *,double *,double *,int);
-
-extern double *OShift,*M,*y,*z,*x_bound;
-extern int ini_flag,n_flag,func_flag,*SS;
 
 
 void cec14_test_func(double *x, double *f, int nx, int mx,int func_num)
