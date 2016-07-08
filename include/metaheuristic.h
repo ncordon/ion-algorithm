@@ -3,26 +3,31 @@
 
 
 #include <algorithm>
-#include "ion.h"
+#include "solution.h"
 using namespace std;
 
 
-void updateFitness(vector<Ion> &population, int &eval);
+void updateFitness(vector<Solution> &population, int &eval);
 
-bool ionOrder(Ion i, Ion j);
+bool ionOrder(Solution i, Solution j);
 
-void updateLocations(vector<Ion> &current, Ion reference);
+void updateLocations(vector<Solution> &current, Solution reference);
 
-void normalize(vector<Ion> &ions, double lbound, double ubound);
+void normalize(vector<Solution> &ions);
 
-void initialize(vector<Ion> &ions, int lbound, int ubound);
+void normalize(Solution &ion);
 
-void redistribute(vector<Ion> &ions, Ion ref,
-                  double lbound, double ubound);
+void initialize(vector<Solution> &ions);
+
+void redistribute(vector<Solution> &ions, Solution ref);
 
 vector<double> ion_algorithm();
 
-void updateBestSolution(double &best_fvalue, vector<double> &best_solution, Ion ref);
+void updateBestSolution(Solution &best_solution, Solution &ref);
 
+
+void applyLocalSearch(Solution &solution, int &eval);
+
+double computeNorm(vector<double> v);
 
 #endif

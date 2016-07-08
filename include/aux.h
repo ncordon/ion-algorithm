@@ -23,6 +23,11 @@ extern int func_num;
 extern int max_eval;
 extern int population_size;
 extern double prob_restart;
+extern double prob_mutation;
+extern double local_epsilon;
+extern int lbound;
+extern int ubound;
+
 extern double fitness(vector<double> x);
 
 #endif

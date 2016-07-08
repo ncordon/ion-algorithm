@@ -20,7 +20,7 @@ int main(){
     std::cout << std::setprecision(6);
 
 
-	cout << fitness(ion_algorithm()) << endl;
+	cout << (fitness(ion_algorithm()) - (func_num*100)) << endl;
 
 
 	free(y);

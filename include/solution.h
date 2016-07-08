@@ -4,14 +4,18 @@
 #include "aux.h"
 using namespace std;
 
-class Ion: public std::vector<double>{
+class Solution: public std::vector<double>{
 private:
     double fvalue;
 
 public:
-    Ion(std::vector<double> position);
+    Ion(vector<double> position);
+
+    Ion(vector<double> position, double custom_fitness);
 
     Ion();
+
+    Ion(Ion const &otro);
 
     void updateFitness();
 
