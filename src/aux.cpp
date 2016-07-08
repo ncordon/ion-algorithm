@@ -13,11 +13,12 @@ int seed = 12345678;
 default_random_engine generator(seed);
 uniform_real_distribution<double> runif(0.0, 1.0);
 // Dimensión en la que estamos trabajando
-int dimension = 20;
+int dimension = 10;
 int func_num = 4;
-int max_eval = 15000;
-int population_size = 100;
+int max_eval = 10000 * dimension;
+int population_size = 30;
 double prob_restart = 0.2;
+double prob_mutation = 0.2;
 
 
 double fitness(vector<double> x){
