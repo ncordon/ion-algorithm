@@ -31,6 +31,8 @@
 *.out
 *.app
 main
-CMakeFiles
+CMakeFiles/*
 Makefile
 example_ls
+CMakeCache.txt
+cmake_install.cmake
