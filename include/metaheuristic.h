@@ -23,8 +23,7 @@ void redistribute(vector<Solution> &ions, Solution ref);
 
 vector<double> ion_algorithm();
 
-void updateBestSolution(Solution &best_solution, Solution &ref);
-
+void updateBestSolution(Solution &best_solution, Solution ref);
 
 void applyLocalSearch(Solution &solution, int &eval);
 

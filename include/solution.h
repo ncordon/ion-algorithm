@@ -1,5 +1,5 @@
-#ifndef __ION_H__
-#define __ION_H__
+#ifndef __SOLUTION_H__
+#define __SOLUTION_H__
 
 #include "aux.h"
 using namespace std;
@@ -9,13 +9,13 @@ private:
     double fvalue;
 
 public:
-    Ion(vector<double> position);
+    Solution(vector<double> position);
 
-    Ion(vector<double> position, double custom_fitness);
+    Solution(vector<double> position, double custom_fitness);
 
-    Ion();
+    Solution();
 
-    Ion(Ion const &otro);
+    Solution(Solution const &otro);
 
     void updateFitness();
 

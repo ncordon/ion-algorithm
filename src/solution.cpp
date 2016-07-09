@@ -1,16 +1,16 @@
-#include "ion.h"
+#include "solution.h"
 
-Solution::Ion(vector<double> position) : vector(position){
+Solution::Solution(vector<double> position) : vector(position){
     this->fvalue = fitness(position);
 }
 
-Solution::Ion(vector<double> position, double custom_fitness) : vector(position){
+Solution::Solution(vector<double> position, double custom_fitness) : vector(position){
     this->fvalue = custom_fitness;
 }
 
-Solution::Ion(){}
+Solution::Solution(){}
 
-Solution::Ion(Ion const &otro) : vector((vector<double>) otro){
+Solution::Solution(Solution const &otro) : vector((vector<double>) otro){
     this->fvalue = fitness((vector<double>) otro);
 }
 

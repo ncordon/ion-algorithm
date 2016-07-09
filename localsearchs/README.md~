@@ -1,0 +1,34 @@
+# Sobre este documento #
+
+Este proyecto contiene tres métodos de BL muy usados en optimización continua:
+
+- Solis Wets.
+- Simplex. 
+- CMAES. 
+
+## Compilación ##
+
+El proyecto requiere:
+
+- g++. 
+- Make. 
+- CMake.
+
+Para compilar es necesario hacer:
+
+`$ cmake .`
+`$ make`
+
+### Entorno de depuración ###
+
+Por defecto compila para ejecutar más rápidamente, si se desea depurar es necesario hacer:
+
+cmake -DCMAKE_BUILD_TYPE=Debug .
+
+y luego compilar de nuevo con *make*.
+
+## Pruebas ##
+
+Como ejemplo de uso se ha ofrecido el programa example.cc, que refleja cómo se pueden 
+usar los métodos de búsqueda local.
+

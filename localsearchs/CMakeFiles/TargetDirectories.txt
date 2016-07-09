@@ -1,0 +1,2 @@
+/mnt/580F625C089B22E0/Universidad/4/CuatrimestreII/Metaheurísticas/Práctica Final/repo/localsearchs/CMakeFiles/example_ls.dir
+/mnt/580F625C089B22E0/Universidad/4/CuatrimestreII/Metaheurísticas/Práctica Final/repo/localsearchs/CMakeFiles/localsearch.dir

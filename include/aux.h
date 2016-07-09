@@ -3,6 +3,7 @@
 
 #include <random>
 #include <vector>
+#include <chrono>
 #include <iostream>
 using namespace std;
 
@@ -24,7 +25,7 @@ extern int max_eval;
 extern int population_size;
 extern double prob_restart;
 extern double prob_mutation;
-extern double local_epsilon;
+extern double epsilon;
 extern int lbound;
 extern int ubound;
 
