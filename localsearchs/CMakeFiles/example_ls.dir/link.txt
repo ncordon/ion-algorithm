@@ -1,1 +1,0 @@
-/usr/bin/c++       CMakeFiles/example_ls.dir/example.cc.o  -o example_ls -rdynamic liblocalsearch.so -Wl,-rpath,"/mnt/580F625C089B22E0/Universidad/4/CuatrimestreII/Metaheurísticas/Práctica Final/repo/localsearchs" 
