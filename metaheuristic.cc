@@ -47,7 +47,7 @@ void initialize(vector<Solution> &ions){
 
     for (unsigned int i=0; i < ions.size(); i++){
         for (unsigned int j=0; j < dimension; j++)
-            position[j] = lbound + (ubound-lbound)*runif(generator);
+            position[j] = myrandom.randreal(lbound, ubound);
 
         ions[i] = Solution(position);
     }
@@ -61,23 +61,23 @@ void redistribute(vector<Solution> &ions, Solution ref, Solution ref_old){
 
     for (unsigned int i = 0; i < ions.size(); i++){
         // -1 < phi < 1
-        phi = -1 + 2*runif(generator);
+        phi = myrandom.randreal(-1,1);
 
-        if (runif(generator) > 0.5)
+        if (myrandom.randreal(0,1) > 0.5)
             for (unsigned int j = 0; j < ions[i].size(); j++){
                 ions[i][j] = ions[i][j] + phi * ref_old[j];
-                //if(runif(generator) < prob_mutation)
-                //    ions[i][j] = lbound + (ubound-lbound)*runif(generator);
+                //if(myrandom.randreal(0,1) < prob_mutation)
+                //    ions[i][j] = myrandom.randreal(lbound, ubound);
             }
         else
             for (unsigned int j = 0; j < ions[i].size(); j++){
                 ions[i][j] = ions[i][j] + phi * ref[j];
-                //if(runif(generator) < prob_mutation)
-                //    ions[i][j] = lbound + (ubound-lbound)*runif(generator);
+                //if(myrandom.randreal(0,1) < prob_mutation)
+                //    ions[i][j] = myrandom.randreal(lbound, ubound);
             }
-        if(runif(generator) < prob_restart)
+        if(myrandom.randreal(0,1) < prob_restart)
             for (unsigned int j = 0; j < ions[i].size(); j++)
-                ions[i][j] = lbound + (ubound-lbound)*runif(generator);
+                ions[i][j] = myrandom.randreal(lbound, ubound);
     }
 }
 
@@ -94,6 +94,7 @@ vector<double> ion_algorithm(){
     Solution best_solution(vector<double>(dimension), numeric_limits<double>::infinity());
     int eval = 0;
     bool liquid_phase = false;
+    bool best_updated = false;
 
     // Inicialización
     initialize(cations);
@@ -130,6 +131,12 @@ vector<double> ion_algorithm(){
                 // Salimos de la fase liquida, entramos en la sólida
                 liquid_phase = false;
             }
+
+            updateBestSolution(best_solution, best_cation);
+            updateBestSolution(best_solution, best_anion);
+            //applyRealeaLS(best_solution, eval, dimension*10, "sw");
+            //applyRealeaLS(best_solution, eval, dimension*20, "cmaes");
+
             eval++;
         }
         // Fase sólida
@@ -141,11 +148,6 @@ vector<double> ion_algorithm(){
             // Entramos en la siguiente iteración en fase líquida
             liquid_phase = true;
         }
-
-        updateBestSolution(best_solution, best_cation);
-        updateBestSolution(best_solution, best_anion);
-
-        //applyLocalSearch(best_solution, eval);
     }
 
     return ((vector<double>) best_solution);
@@ -163,6 +165,51 @@ double computeNorm(vector<double> v){
     return sqrt(suma);
 }
 
+void applyRealeaLS(Solution &solution, int &eval, int evals_ls, string type_ls){
+    //tChromosomeReal sol(dim);
+    //cerr << "Eval antes de búsqueda local" << eval << endl;
+    tChromosomeReal sol(solution);
+    ProblemCEC2014 cec2014(dimension);
+    ProblemPtr problem = cec2014.get(func_num);
+    ILocalSearch *ls;
+    ILSParameters *ls_options;
+
+    if (type_ls == "sw") {
+        // Get the Solis Wets problem
+        SolisWets *sw = new SolisWets();
+        // Set the delta values
+        sw->setDelta(0.2);
+        ls = sw;
+    }
+    else if (type_ls == "simplex") {
+        ls = new SimplexDim();
+    }
+    else if (type_ls == "cmaes") {
+        CMAESHansen *cmaes = new CMAESHansen("cmaesinit.par");
+        cmaes->searchRange(0.1);
+        ls = cmaes;
+    }
+
+    ls -> setProblem(problem.get());
+    ls -> setRandom(&myrandom);
+    ls_options = ls -> getInitOptions(sol);
+
+    // Apply the local search
+    tFitness fitness = problem->eval(sol);
+//    tFitness before(fitness);
+
+    unsigned evals = ls->apply(ls_options, sol, fitness, evals_ls);
+
+/*    if (fitness < before){
+        cerr << "La búsqueda local está haciendo algo" << endl;
+        cerr << "Before: " << before << endl;
+        cerr << "After: " << fitness << endl;
+    }
+*/
+    eval += evals;
+    solution = Solution(sol, fitness);
+    //cerr << "Eval después de búsqueda local" << eval << endl;
+}
 
 void applyLocalSearch(Solution &solution, int &eval){
     int i=0;
@@ -176,7 +223,7 @@ void applyLocalSearch(Solution &solution, int &eval){
     while(i < tope){
         //if (!mejora){
             for (int j=0; j<direccion.size(); j++){
-                direccion[j] = -1 + 2*runif(generator);
+                direccion[j] = myrandom.randreal(-1,1);
             }
 
 
@@ -184,7 +231,7 @@ void applyLocalSearch(Solution &solution, int &eval){
         //}
 
         for (int j=0; j<direccion.size(); j++){
-            current[j] += runif(generator)*epsilon*(direccion[j] / norma);
+            current[j] += myrandom.randreal(0, epsilon)*(direccion[j] / norma);
         }
 
         normalize(current);

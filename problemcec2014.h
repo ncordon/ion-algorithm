@@ -28,7 +28,7 @@ namespace realea {
  * This class allow us to use the benchmark for CEC'2014 Special Session in Real Optimization.
  * It wraps the original source code of the authors (version in C).
  */
-class ProblemCEC2014 
+class ProblemCEC2014
 {
 public:
     /**
@@ -40,7 +40,7 @@ public:
     /**
      * Clear the memory
      */
-    ~ProblemCEC2014();
+    //~ProblemCEC2014();
     /**
      * Get the problem definition
      *

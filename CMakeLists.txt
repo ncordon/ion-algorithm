@@ -15,14 +15,18 @@ SET (LSSRC
   problemcec2014.cc
   cec2014_func.cpp
   problem.cc
-  example.cc
+  #example.cc
   aux.cc
   solution.cc
   metaheuristic.cc
+  main.cc
 )
 
 ADD_LIBRARY(localsearch SHARED ${LSSRC})
 TARGET_LINK_LIBRARIES(localsearch)
 
-ADD_EXECUTABLE(example_ls example.cc)
-TARGET_LINK_LIBRARIES(example_ls localsearch)
+#ADD_EXECUTABLE(example_ls example.cc)
+#TARGET_LINK_LIBRARIES(example_ls localsearch)
+
+ADD_EXECUTABLE(main main.cc)
+TARGET_LINK_LIBRARIES(main localsearch)

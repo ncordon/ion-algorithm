@@ -14,7 +14,7 @@ ProblemCEC2014::ProblemCEC2014(unsigned int dim) {
     assert(dim == 10 || dim == 30 || dim == 50);
     m_dim = dim;
 }
-
+/*
 ProblemCEC2014::~ProblemCEC2014() {
   if (y) {
 	free(y);
@@ -35,7 +35,7 @@ ProblemCEC2014::~ProblemCEC2014() {
 	free(SS);
    }
 
-}
+}*/
 
 
 static int m_fn;

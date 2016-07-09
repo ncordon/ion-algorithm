@@ -19,6 +19,8 @@ public:
 
     void updateFitness();
 
+    void setFitness(double score);
+
     double getFitness();
 };
 

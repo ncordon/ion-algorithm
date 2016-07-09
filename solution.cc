@@ -18,6 +18,10 @@ void Solution::updateFitness(){
     fvalue = fitness(*this);
 }
 
+void Solution::setFitness(double score){
+    fvalue = score;
+}
+
 double Solution::getFitness(){
     return fvalue;
 }

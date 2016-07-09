@@ -1,11 +1,18 @@
 #ifndef __AUX_H__
 #define __AUX_H__
 
-#include <random>
 #include <vector>
-#include <chrono>
+#include "problemcec2014.h"
+#include "problem.h"
+#include "solis.h"
+#include "simplex.h"
+#include "cmaeshan.h"
+#include "random.h"
+#include "srandom.h"
+#include "domain.h"
+#include "localsearch.h"
 #include <iostream>
-using namespace std;
+using namespace realea;
 
 
 // Parámetros del archivo con las funciones
@@ -15,9 +22,12 @@ extern int ini_flag,n_flag,func_flag,*SS;
 
 
 // Generador aleatorio
-extern int seed;
-extern default_random_engine generator;
-extern uniform_real_distribution<double> runif;
+// extern int seed;
+// extern default_random_engine generator;
+// extern uniform_real_distribution<double> runif;
+extern Random myrandom;
+
+
 // Dimensión en la que estamos trabajando
 extern int dimension;
 extern int func_num;

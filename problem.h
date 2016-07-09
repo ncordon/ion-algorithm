@@ -1,18 +1,18 @@
 /**
  * Copyright 2008, Daniel Molina Cabrera <danimolina@gmail.com>
- * 
+ *
  * This file is part of software Realea
- * 
+ *
  * Realea is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- * 
+ *
  * Realea is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU General Public License
  * along with Foobar.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -41,11 +41,11 @@ namespace realea {
  * @brief Let specify when a class is optimum.
  *
  * This class' target is easier to specify when the optimum is achieved
- * 
+ *
  */
 #define MINIMIZE minimize
 #define MAXIMIZE maximize
-struct OptimeCriterion { 
+struct OptimeCriterion {
 public:
 
    /**
@@ -72,7 +72,7 @@ public:
      * @param fitness fitness of current solution
      * @return true if abs(fitness - fitness_optimum) < threshold
      */
-    bool isOptime(double fitness); 
+    bool isOptime(double fitness);
 
 	/**
 	 * Set the minimize criterion
@@ -122,7 +122,7 @@ private:
    double m_threshold; /**< Threshold value */
    double m_minimize;
 };
-	
+
 
 class ConfigException: public runtime_error {
 private:
@@ -164,7 +164,7 @@ public:
 	/**
 	 * Constructor
 	 */
-	Problem(void); 
+	Problem(void);
 
 	/**
 	 * Set the function evaluation. It is a function that return a tFitness from a Chromosome real
@@ -196,7 +196,7 @@ public:
 	bool isBetter(tFitness x, tFitness y);
 
 	/**
-	 * Set the problem's dimensionality 
+	 * Set the problem's dimensionality
 	 *
 	 * @param dim new dimensionality
 	 */
@@ -205,7 +205,7 @@ public:
 	 * @return the dimensionality of current problem
 	 */
 	virtual unsigned int getDimension(void);
-	
+
 	/**
 	 * Set for a gen the range (maximum and minimum values)
 	 *
@@ -215,19 +215,19 @@ public:
 	 * @param check set if the gen must be checked, default true
 	 */
 	void setDomainValues(unsigned int gen, tGen min, tGen max, bool check=true);
-	
+
 	/**
 	 * Set the optimum value and the threshold
-	 * A solution is an optimum if their difference in fitness with the optimum 
+	 * A solution is an optimum if their difference in fitness with the optimum
 	 * is lower than this threshould (if it is not defined, threshold is equal to 0)
 
 	 * @param optime optimum value
 	 * @param threshold threshold value (must be positive)
 	 */
-	void setOptimize(tFitness optime, double threshold); 
+	void setOptimize(tFitness optime, double threshold);
 
 	/**
-	 * Set the threshold, a solution is an optimum if their difference in fitness with the optimum 
+	 * Set the threshold, a solution is an optimum if their difference in fitness with the optimum
 	 * is lower than this threshould (if it is not defined, threshold is equal to 0)
 	 *
 	 * @param dif threshold value (must be positive)
@@ -240,7 +240,7 @@ public:
 	 *
 	 * @param maxeval maximum eval number
 	 */
-	void setMaxEval(unsigned int maxeval); 
+	void setMaxEval(unsigned int maxeval);
 
 	/**
 	 * @return the maximum evaluation number
@@ -261,7 +261,7 @@ public:
 
 	tFitness eval(const tChromosomeReal &sol);
 	tFitness eval(const tGen *sol, int dim);
-	void copy(Problem *problem); 
+	void copy(Problem *problem);
 
 protected:
 	OptimeCriterion *m_checkOptime;
