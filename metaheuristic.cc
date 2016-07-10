@@ -75,9 +75,10 @@ void redistribute(vector<Solution> &ions, Solution ref, Solution ref_old){
                 //if(myrandom.randreal(0,1) < prob_mutation)
                 //    ions[i][j] = myrandom.randreal(lbound, ubound);
             }
-        if(myrandom.randreal(0,1) < prob_restart)
+        if(myrandom.randreal(0,1) < prob_restart){
             for (unsigned int j = 0; j < ions[i].size(); j++)
                 ions[i][j] = myrandom.randreal(lbound, ubound);
+        }
     }
 }
 
@@ -93,8 +94,8 @@ vector<double> ion_algorithm(){
     vector<Solution> anions(population_size/2);
     Solution best_solution(vector<double>(dimension), numeric_limits<double>::infinity());
     int eval = 0;
-    bool liquid_phase = false;
-    bool best_updated = false;
+    bool liquid_phase = true;
+    
 
     // Inicialización
     initialize(cations);
@@ -108,9 +109,9 @@ vector<double> ion_algorithm(){
     auto best_cation_old = best_cation;
     auto best_anion_old = best_anion;
 
-
     while (eval < max_eval){
         // Fase líquida
+
         if (liquid_phase){
             updateLocations(anions, best_cation);
             updateLocations(cations, best_anion);
@@ -128,6 +129,7 @@ vector<double> ion_algorithm(){
 
             if (best_cation.getFitness() >= worst_cation.getFitness() &&
                 best_anion.getFitness() >= worst_anion.getFitness()){
+
                 // Salimos de la fase liquida, entramos en la sólida
                 liquid_phase = false;
             }
@@ -136,8 +138,6 @@ vector<double> ion_algorithm(){
             updateBestSolution(best_solution, best_anion);
             //applyRealeaLS(best_solution, eval, dimension*10, "sw");
             //applyRealeaLS(best_solution, eval, dimension*20, "cmaes");
-
-            eval++;
         }
         // Fase sólida
         else{

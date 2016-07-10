@@ -1,0 +1,28 @@
+% Generator: GNU source-highlight, by Lorenzo Bettini, http://www.gnu.org/software/src-highlite
+\noindent
+\mbox{}\textbf{\textcolor{Blue}{if}}\ \ fitness\textcolor{BrickRed}{(}best\textcolor{BrickRed}{(}cations\textcolor{BrickRed}{))}\ \textcolor{BrickRed}{\textgreater{}=}\ fitness\textcolor{BrickRed}{(}worst\textcolor{BrickRed}{(}cations\textcolor{BrickRed}{))}\ \textbf{\textcolor{Blue}{and}} \\
+\mbox{}\ \ \ \ fitness\textcolor{BrickRed}{(}best\textcolor{BrickRed}{(}anions\textcolor{BrickRed}{))}\ \textcolor{BrickRed}{\textgreater{}=}\ fitness\textcolor{BrickRed}{(}worst\textcolor{BrickRed}{(}anions\textcolor{BrickRed}{))} \\
+\mbox{} \\
+\mbox{}\ \ \ \ \textbf{\textcolor{Blue}{if}}\ \textcolor{BrickRed}{(}rand\ \textcolor{BrickRed}{\textless{}}\ prob$\_$restart\textcolor{BrickRed}{)}\textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ \ \ \ \ random$\_$restart\textcolor{BrickRed}{(}anions\textcolor{BrickRed}{)} \\
+\mbox{}\ \ \ \ \textcolor{Red}{\}} \\
+\mbox{}\ \ \ \ \textbf{\textcolor{Blue}{else}}\textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ \ \ \ \ \textbf{\textcolor{Blue}{for}}\ i\textcolor{BrickRed}{=}\textcolor{Purple}{0}\ to\ length\textcolor{BrickRed}{(}anions\textcolor{BrickRed}{)}\textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textcolor{Blue}{if}}\ \textcolor{BrickRed}{(}rand\textcolor{BrickRed}{(}\textcolor{Purple}{0}\textcolor{BrickRed}{,}\textcolor{Purple}{1}\textcolor{BrickRed}{)}\ \textcolor{BrickRed}{\textgreater{}}\ \textcolor{Purple}{0.5}\textcolor{BrickRed}{)} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ anion\textcolor{BrickRed}{[}i\textcolor{BrickRed}{]}\ \textcolor{BrickRed}{=}\ anion\textcolor{BrickRed}{[}i\textcolor{BrickRed}{]}\ \textcolor{BrickRed}{+}\ rand\textcolor{BrickRed}{(-}\textcolor{Purple}{1}\textcolor{BrickRed}{,}\textcolor{Purple}{1}\textcolor{BrickRed}{)*(}best$\_$old$\_$cation\textcolor{BrickRed}{)} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textcolor{Blue}{else}} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ anion\textcolor{BrickRed}{[}i\textcolor{BrickRed}{]}\ \textcolor{BrickRed}{=}\ anion\textcolor{BrickRed}{[}i\textcolor{BrickRed}{]}\ \textcolor{BrickRed}{+}\ rand\textcolor{BrickRed}{(-}\textcolor{Purple}{1}\textcolor{BrickRed}{,}\textcolor{Purple}{1}\textcolor{BrickRed}{)*(}best$\_$cation\textcolor{BrickRed}{)} \\
+\mbox{}\ \ \ \ \ \ \ \ \textcolor{Red}{\}} \\
+\mbox{}\ \ \ \ \textcolor{Red}{\}} \\
+\mbox{}\ \ \ \ \textbf{\textcolor{Blue}{if}}\ \textcolor{BrickRed}{(}rand\ \textcolor{BrickRed}{\textless{}}\ prob$\_$restart\textcolor{BrickRed}{)}\textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ \ \ \ \ random$\_$restart\textcolor{BrickRed}{(}cations\textcolor{BrickRed}{)} \\
+\mbox{}\ \ \ \ \textcolor{Red}{\}} \\
+\mbox{}\ \ \ \ \textbf{\textcolor{Blue}{else}}\textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ \ \ \ \ \textbf{\textcolor{Blue}{for}}\ i\textcolor{BrickRed}{=}\textcolor{Purple}{0}\ to\ length\textcolor{BrickRed}{(}cations\textcolor{BrickRed}{)}\textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textcolor{Blue}{if}}\ \textcolor{BrickRed}{(}rand\textcolor{BrickRed}{(}\textcolor{Purple}{0}\textcolor{BrickRed}{,}\textcolor{Purple}{1}\textcolor{BrickRed}{)}\ \textcolor{BrickRed}{\textgreater{}}\ \textcolor{Purple}{0.5}\textcolor{BrickRed}{)} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cation\textcolor{BrickRed}{[}i\textcolor{BrickRed}{]}\ \textcolor{BrickRed}{=}\ cation\textcolor{BrickRed}{[}i\textcolor{BrickRed}{]}\ \textcolor{BrickRed}{+}\ rand\textcolor{BrickRed}{(-}\textcolor{Purple}{1}\textcolor{BrickRed}{,}\textcolor{Purple}{1}\textcolor{BrickRed}{)*(}best$\_$old$\_$anion\textcolor{BrickRed}{)} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textcolor{Blue}{else}} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ cation\textcolor{BrickRed}{[}i\textcolor{BrickRed}{]}\ \textcolor{BrickRed}{=}\ cation\textcolor{BrickRed}{[}i\textcolor{BrickRed}{]}\ \textcolor{BrickRed}{+}\ rand\textcolor{BrickRed}{(-}\textcolor{Purple}{1}\textcolor{BrickRed}{,}\textcolor{Purple}{1}\textcolor{BrickRed}{)*(}best$\_$anion\textcolor{BrickRed}{)} \\
+\mbox{}\ \ \ \ \ \ \ \ \textcolor{Red}{\}} \\
+\mbox{}\ \ \ \ \textcolor{Red}{\}} \\
+\mbox{}
