@@ -340,8 +340,49 @@ Se modelan dos fases en el movimiento de los iones:
  Pero usar dicha división entre 2 parecía algo ilógico. Ésta constituye una de las grandes imprecisiones que se comentaban
  anteriormente. Por ello se suprimió dicha división por 2. Más aún, ni siquiera sin esa división por 2 parecemos asegurar que abandonemos
  la fase líquida en algún momento. Esta será una de las cuestiones a debatir en las mejoras del algoritmo.
+\end{itemize} 
  
-\end{itemize}
+ \subsection{Equilibrio Diversidad Convergencia}
+ 
+ \subsection{Comparación con las otras metaheaurísticas}
+ 
+ Hemos obtenido los siguientes resultados:
+ 
+ \begin{center}
+  \begin{table}[H]	
+  \caption{Resultados del \textit{Algoritmo de iones}}
+  \begin{adjustbox}{width=0.5\textwidth}
+    
+  \begin{tabular}{|l|l|l|}
+  \hline
+  &  \textbf{Dimensión 10}& \textbf{Dimensión 30} \\ \hline
+  f1 &  1.82517e+07 &  7.27101e+07 \\ \hline
+  f2 &  24758.1 &  1.37997e+07 \\ \hline
+  f3 &  18000.2 &  72547.6 \\ \hline
+  f4 &  52.8423 & \multicolumn{1}{r|}{227242} \\ \hline
+  f5 &  20.1565 &  20.5654 \\ \hline
+  f6 &  7.2295 &  34.2172 \\ \hline
+  f7 &  0.886397 &  1.08524 \\ \hline
+  f8 &  24.5963 & \multicolumn{1}{r|}{128436} \\ \hline
+  f9 & \multicolumn{1}{r|}{28617} & \multicolumn{1}{r|}{143265} \\ \hline
+  f10 &  1217.88 &  4297.57 \\ \hline
+  f11 &  1095.03 &  4599.9 \\ \hline
+  f12 &  0.635784 &  1.24959 \\ \hline
+  f13 &  0.413744 &  0.494034 \\ \hline
+  f14 &  0.47361 &  0.26897 \\ \hline
+  f15 &  3.98797 &  54.5077 \\ \hline
+  f16 &  3.41308 &  12.3391 \\ \hline
+  f17 & \multicolumn{1}{r|}{256333} &  3.79658e+06 \\ \hline
+  f18 &  8036.56 &  5221.76 \\ \hline
+  f19 &  7.67194 &  43.2568 \\ \hline
+  f20 &  6202.44 &  60097.9 \\ \hline
+\end{tabular}
+  
+  \end{adjustbox}
+  \label{ion-results}
+  \end{table}
+  \end{center}
+ 
 
 
 \section{Propuestas de mejora del algoritmo}
