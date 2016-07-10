@@ -20,6 +20,8 @@
 \usepackage{adjustbox}
 \newsavebox\ltmcbox
 
+% Ecuaciones aumentadas
+\everymath{\displaystyle}
 
 % Para matrices
 \usepackage{amsmath}
@@ -301,8 +303,8 @@ Se modelan dos fases en el movimiento de los iones:
  empiecen a parecer a los de ese catión, con mayor grado de convergencia en las componentes más cercanas, y menor en las más
  lejanas.
  
- Además, la convergencia a un punto en el espacio está garantizada, puesto que la sucesión $\left\{\frac{1}{2^n}\right\}$ converge
- a 0, y se tiene $ \frac{1}{2} \le F_{i,j} \le 1$
+ Además, la convergencia puntos en el espacio debería estar garantizada, puesto que la sucesión $\left\{\frac{1}{2^n}\right\}$ converge
+ a 0, y se tiene $ \frac{1}{2} \le F_{i,j} \le 1$. Pasaremos a discutir esto en la siguiente sección.
  
  
  \item \textbf{Fase sólida}: Se modela una fase en la que una vez alcanzada la convergencia a una solución, podamos movernos
@@ -344,47 +346,88 @@ Se modelan dos fases en el movimiento de los iones:
  
  \subsection{Equilibrio Diversidad Convergencia}
  
+  Parece existir un problema con la convergencia a puntos del espacio, puesto que podríamos tener dos puntos del espacio que
+  fueran óptimos locales en una cierta zona muy cercana, el mejor anión situado en uno de ellos, y el mejor catión en otro.
+  Podríamos tener a todos los aniones excepto el mejor, en una zona lo suficientemente cercana al mejor catión; y a todos
+  los cationes, excepto el mejor, en una zona lo suficientemente cercana al mejor anión. Se tendría que en cada iteración,
+  todos los aniones se intercambian con los cationes, por la cercanía de las partículas, y todos los cationes se intercambian
+  con los aniones, y nunca llegaríamos a tener la convergencia a un único punto.
+  
+  Matemáticamente, sea $f$ la función a minimizar en un espacio $[-100,100]^D$, y sean $x,y$ en dicho espacio. Supongamos:
+  
+  $$\exists B(x,\delta_1), B(y, \delta_2)$$ verificándose que $$B(x,\delta_1) \bigcap B(x,\delta_2) = \emptyset $$
+  
+  $f$ tiene un mínimo local en $B(x,\delta_1)$ y otro en $B(y,\delta_1)$
+  
+  se cumple que $C_{best}\in B(x,\delta_1)$, $A_{best}\in B(x,\delta_2)$, y además $A_i\in B(x,\delta_1) \forall A_i \neq A_{best}$ 
+  y $C_i\in B(x,\delta_2) \forall C_i \neq C_{best}$, con $F_{i,j} \approx 1$. Podríamos entonces no tener convergencia
+  nunca a un único punto, o incluso que fuese tan lenta que estuviésemos perdiendo un montón de evaluaciones con soluciones
+  de \textit{fitness} similar.
+  
+  Es más, supongamos en lo que sigue que tenemos convergencia a un único punto. Aún así, el mecanismo para entrar
+  a fase líquida no parece del todo certero, porque nunca podemos asegurar que se vaya  cumplir que:
+  
+  \small{\texttt{\input{condsolid.tex}}}
+  \normalsize
+  
+  a pesar de haber alcanzado un óptimo local. Aún así, si este mecanismo fuese del todo certero, deberíamos buscar otro método
+  para introducir mayor diversidad en la población de iones.
+ 
  \subsection{Comparación con las otras metaheaurísticas}
  
- Hemos obtenido los siguientes resultados:
+ Hemos obtenido los siguientes resultados, tras la implementación del algoritmo con las variaciones descritas, pero filedigno
+ a lo expuesto por sus autores:
  
- \begin{center}
+ 
   \begin{table}[H]	
   \caption{Resultados del \textit{Algoritmo de iones}}
-  \begin{adjustbox}{width=0.5\textwidth}
-    
-  \begin{tabular}{|l|l|l|}
+  \centering
+  \begin{tabular}{|l|r|r|}
   \hline
   &  \textbf{Dimensión 10}& \textbf{Dimensión 30} \\ \hline
-  f1 &  1.82517e+07 &  7.27101e+07 \\ \hline
-  f2 &  24758.1 &  1.37997e+07 \\ \hline
-  f3 &  18000.2 &  72547.6 \\ \hline
-  f4 &  52.8423 & \multicolumn{1}{r|}{227242} \\ \hline
-  f5 &  20.1565 &  20.5654 \\ \hline
-  f6 &  7.2295 &  34.2172 \\ \hline
-  f7 &  0.886397 &  1.08524 \\ \hline
-  f8 &  24.5963 & \multicolumn{1}{r|}{128436} \\ \hline
-  f9 & \multicolumn{1}{r|}{28617} & \multicolumn{1}{r|}{143265} \\ \hline
-  f10 &  1217.88 &  4297.57 \\ \hline
-  f11 &  1095.03 &  4599.9 \\ \hline
-  f12 &  0.635784 &  1.24959 \\ \hline
-  f13 &  0.413744 &  0.494034 \\ \hline
-  f14 &  0.47361 &  0.26897 \\ \hline
-  f15 &  3.98797 &  54.5077 \\ \hline
-  f16 &  3.41308 &  12.3391 \\ \hline
-  f17 & \multicolumn{1}{r|}{256333} &  3.79658e+06 \\ \hline
-  f18 &  8036.56 &  5221.76 \\ \hline
-  f19 &  7.67194 &  43.2568 \\ \hline
-  f20 &  6202.44 &  60097.9 \\ \hline
+  $f_1$ &  1.82517e+07 &  7.27101e+07 \\ \hline
+  $f_2$ &  24758.1 &  1.37997e+07 \\ \hline
+  $f_3$ &  18000.2 &  72547.6 \\ \hline
+  $f_4$ &  52.8423 & 227.242 \\ \hline
+  $f_5$ &  20.1565 &  20.5654 \\ \hline
+  $f_6$ &  7.2295 &  34.2172 \\ \hline
+  $f_7$ &  0.886397 &  1.08524 \\ \hline
+  $f_8$ &  24.5963 & 12.8436 \\ \hline
+  $f_9$ &  28.617 & 14.3265\\ \hline
+  $f_{10}$ &  1217.88 &  4297.57 \\ \hline
+  $f_{11}$ &  1095.03 &  4599.9 \\ \hline
+  $f_{12}$ &  0.635784 &  1.24959 \\ \hline
+  $f_{13}$ &  0.413744 &  0.494034 \\ \hline
+  $f_{14}$ &  0.47361 &  0.26897 \\ \hline
+  $f_{15}$ &  3.98797 &  54.5077 \\ \hline
+  $f_{16}$ &  3.41308 &  12.3391 \\ \hline
+  $f_{17}$ &  256333  &  3.79658e+06 \\ \hline
+  $f_{18}$ &  8036.56 &  5221.76 \\ \hline
+  $f_{19}$ &  7.67194 &  43.2568 \\ \hline
+  $f_{20}$ &  6202.44 &  60097.9 \\ \hline
 \end{tabular}
   
-  \end{adjustbox}
   \label{ion-results}
   \end{table}
-  \end{center}
- 
 
 
 \section{Propuestas de mejora del algoritmo}
+\begin{itemize}
+ \item \textbf{Optimización de parámetros}.
+ 
+ A este efecto, hemos probado, para las 5 primeras funciones (debido a la falta de tiempo), los siguientes valores de tamaño
+ de población de iones: $\big\{10, 20, 30, 40, 50\big\}$ y los siguientes valores de probabilidad de reinicio: $\big\{0.05, 0.1, 0.15, 0.2\big\}$
+ 
+ obteniendo los mejores resultados con un tamaño poblacional de $50$ iones, y una probabilidad de reinicio del $0.1$, que corresponden
+ a los resultados presentados en el punto número 3
+ 
+ \item \textbf{Hibridación con búsqueda local}.
+ 
+ Buscamos que el algoritmo tal cual nos proporcione la diversidad y la búsqueda local el factor de convergencia. Probamos a hibridar
+ con \textit{SolisWets} y con \textit{CMAES}, búsquedas locales programadas en el software Realea de Daniel Molina distribuido
+ bajo licencia GPL.
+\end{itemize}
+
+
 \section{Conclusiones aprendidas}
 \end{document}
