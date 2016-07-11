@@ -1,6 +1,6 @@
 #!/bin/bash
 
-files="solidstate normalization condsolid"
+files="solidstate normalization condsolid localsearch"
 
 for f in $files
 do

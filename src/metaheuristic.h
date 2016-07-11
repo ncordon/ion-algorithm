@@ -27,9 +27,9 @@ vector<double> ion_algorithm();
 
 void updateBestSolution(Solution &best_solution, Solution ref);
 
-void applyRealeaLS(Solution &solution, int &eval, int evals_ls, string type_ls);
+void applyRealeaLS(Solution &solution, int &eval, int evals_ls);
 
-void applyLocalSearch(Solution &solution, int &eval);
+void applyLocalSearch(Solution &solution, int &eval, int evals_ls);
 
 double computeNorm(vector<double> v);
 

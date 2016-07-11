@@ -423,11 +423,54 @@ Se modelan dos fases en el movimiento de los iones:
  
  \item \textbf{Hibridación con búsqueda local}.
  
- Buscamos que el algoritmo tal cual nos proporcione la diversidad y la búsqueda local el factor de convergencia. Probamos a hibridar
- con \textit{SolisWets} y con \textit{CMAES}, búsquedas locales programadas en el software Realea de Daniel Molina distribuido
+ Buscamos que el algoritmo tal cual nos proporcione la diversidad y la búsqueda local el factor de convergencia. 
+ 
+ 
+ Se programó una búsqueda local que no funcionaba comedidamente, que fundamentalmente, realizaba las siguientes operaciones:
+ 
+  \small{\texttt{\input{localsearch.tex}}}
+  \normalsize
+  
+  donde se escogía un \texttt{epsilon = 0.25} y \texttt{evals\_ls = 10*dimension}, es decir, se sumaba un vector de norma euclídea
+  menor o igual a epsilon al vector mejor solución, y si encontrábamos mejora, aplicábamos el mismo procedimiento al vector mejorado,
+  hasta agotar las $10*D$ iteraciones.
+  
+ Posteriormente, probamos a hibridar con \textit{SolisWets}, \textit{CMAES} y \textit{Simplex}, búsquedas locales programadas en el software Realea de Daniel Molina distribuido
  bajo licencia GPL.
 \end{itemize}
 
 
+\section{Empleo del software programado}
+
+Para compilar el software proporcionado, basta hacer, en el directorio \texttt{src}, lo siguiente:
+
+\begin{verbatim}
+    Cmake .
+    make
+    ./main
+\end{verbatim}
+
+Cuando ejecutamos el programa, obtenemos para dimensión 10 y 30, la evaluación que producen el algoritmo de iones.
+Si se quiere modificar algún parámetro, debe hacerse en el fichero \texttt{./src/aux.cpp}. 
+
+\begin{itemize}
+ \item \texttt{num\_ejecuciones}. Fijado a 25.
+ \item \texttt{population\_size}. Tamaño de la población total de iones en cada iteración. La mitad serán aniones y la otra
+ mitad cationes.
+ \item \texttt{lbound} y \texttt{ubound}. Son los límites del espacio $[lbound, ubound]^D$.
+ \item \texttt{prob\_restart}. Probabilidad de reinicio de aniones y cationes. Por defecto a 0.1.
+ \item \texttt{type\_ls}. Puede ser ``sw``, ``cmaes`` o ''simplex``. Tipo de búsqueda local a emplear.
+\end{itemize}
+
+Si se ha modificado algún parámetro, habrá que hacer:
+\begin{verbatim}
+    make
+    ./main
+\end{verbatim}
+
+
+
 \section{Conclusiones aprendidas}
+
+
 \end{document}

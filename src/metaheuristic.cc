@@ -95,7 +95,7 @@ vector<double> ion_algorithm(){
     Solution best_solution(vector<double>(dimension), numeric_limits<double>::infinity());
     int eval = 0;
     bool liquid_phase = true;
-    
+
 
     // Inicialización
     initialize(cations);
@@ -136,8 +136,6 @@ vector<double> ion_algorithm(){
 
             updateBestSolution(best_solution, best_cation);
             updateBestSolution(best_solution, best_anion);
-            //applyRealeaLS(best_solution, eval, dimension*10, "sw");
-            //applyRealeaLS(best_solution, eval, dimension*20, "cmaes");
         }
         // Fase sólida
         else{
@@ -145,6 +143,9 @@ vector<double> ion_algorithm(){
             redistribute(anions, best_cation, best_cation_old);
             normalize(cations);
             normalize(anions);
+
+            applyRealeaLS(best_solution, eval, dimension*10);
+            //applyLocalSearch(best_solution, eval, dimension*10);
             // Entramos en la siguiente iteración en fase líquida
             liquid_phase = true;
         }
@@ -165,9 +166,7 @@ double computeNorm(vector<double> v){
     return sqrt(suma);
 }
 
-void applyRealeaLS(Solution &solution, int &eval, int evals_ls, string type_ls){
-    //tChromosomeReal sol(dim);
-    //cerr << "Eval antes de búsqueda local" << eval << endl;
+void applyRealeaLS(Solution &solution, int &eval, int evals_ls){
     tChromosomeReal sol(solution);
     ProblemCEC2014 cec2014(dimension);
     ProblemPtr problem = cec2014.get(func_num);
@@ -196,39 +195,26 @@ void applyRealeaLS(Solution &solution, int &eval, int evals_ls, string type_ls){
 
     // Apply the local search
     tFitness fitness = problem->eval(sol);
-//    tFitness before(fitness);
-
     unsigned evals = ls->apply(ls_options, sol, fitness, evals_ls);
 
-/*    if (fitness < before){
-        cerr << "La búsqueda local está haciendo algo" << endl;
-        cerr << "Before: " << before << endl;
-        cerr << "After: " << fitness << endl;
-    }
-*/
     eval += evals;
     solution = Solution(sol, fitness);
-    //cerr << "Eval después de búsqueda local" << eval << endl;
 }
 
-void applyLocalSearch(Solution &solution, int &eval){
+
+void applyLocalSearch(Solution &solution, int &eval, int evals_ls){
     int i=0;
-    int tope=solution.size();
-    //double epsilon = local_epsilon;
     double norma;
     vector<double> direccion(solution.size());
     Solution current(solution);
     bool mejora = false;
 
-    while(i < tope){
-        //if (!mejora){
-            for (int j=0; j<direccion.size(); j++){
-                direccion[j] = myrandom.randreal(-1,1);
-            }
+    while(i < evals_ls){
+        for (int j=0; j<direccion.size(); j++){
+            direccion[j] = myrandom.randreal(-1,1);
+        }
 
-
-            norma = computeNorm(direccion);
-        //}
+        norma = computeNorm(direccion);
 
         for (int j=0; j<direccion.size(); j++){
             current[j] += myrandom.randreal(0, epsilon)*(direccion[j] / norma);

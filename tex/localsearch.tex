@@ -1,0 +1,26 @@
+% Generator: GNU source-highlight, by Lorenzo Bettini, http://www.gnu.org/software/src-highlite
+\noindent
+\mbox{}applyLocalSearch\textcolor{BrickRed}{(}best$\_$solution\textcolor{BrickRed}{)}\textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ current\ \textcolor{BrickRed}{=}\ best$\_$solution \\
+\mbox{} \\
+\mbox{}\ \ \ \ \textbf{\textcolor{Blue}{for}}\ i\ \textbf{\textcolor{Blue}{in}}\ \textcolor{Red}{\{}\textcolor{Purple}{1}\textcolor{BrickRed}{,}\textcolor{Purple}{2}\textcolor{BrickRed}{,...}evals$\_$ls\textcolor{Red}{\}}\ \textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ \ \ \ \ direccion\ \textcolor{BrickRed}{=}\ \textcolor{BrickRed}{[}random\textcolor{BrickRed}{(}\textcolor{Purple}{0}\textcolor{BrickRed}{,}\textcolor{Purple}{1}\textcolor{BrickRed}{)}\ \textbf{\textcolor{Blue}{for}}\ i\ \textbf{\textcolor{Blue}{in}}\ \textcolor{Red}{\{}\textcolor{Purple}{1}\textcolor{BrickRed}{...}dimension\textcolor{Red}{\}}\textcolor{BrickRed}{]} \\
+\mbox{}\ \ \ \ \ \ \ \ norma\ \textcolor{BrickRed}{=}\ \textcolor{BrickRed}{$|$$|$}\ direccion\ \textcolor{BrickRed}{$|$$|$} \\
+\mbox{} \\
+\mbox{}\ \ \ \ \ \ \ \ \textbf{\textcolor{Blue}{for}}\ j\ \textbf{\textcolor{Blue}{in}}\ \textcolor{Red}{\{}\textcolor{Purple}{1}\textcolor{BrickRed}{...}dimension\textcolor{Red}{\}}\ \textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ current\textcolor{BrickRed}{[}j\textcolor{BrickRed}{]}\ \textcolor{BrickRed}{+=}\ random\textcolor{BrickRed}{(}\textcolor{Purple}{0}\textcolor{BrickRed}{,}\ epsilon\textcolor{BrickRed}{)*(}direccion\textcolor{BrickRed}{[}j\textcolor{BrickRed}{]}\ \textcolor{BrickRed}{/}\ norma\textcolor{BrickRed}{);} \\
+\mbox{}\ \ \ \ \ \ \ \ \textcolor{Red}{\}} \\
+\mbox{} \\
+\mbox{}\ \ \ \ \ \ \ \ normalize\textcolor{BrickRed}{(}current\textcolor{BrickRed}{);} \\
+\mbox{}\ \ \ \ \ \ \ \ current\textcolor{BrickRed}{.}updateFitness\textcolor{BrickRed}{();} \\
+\mbox{} \\
+\mbox{}\ \ \ \ \ \ \ \ \textbf{\textcolor{Blue}{if}}\ \textcolor{BrickRed}{(}current\textcolor{BrickRed}{.}getFitness\textcolor{BrickRed}{()}\ \textcolor{BrickRed}{\textless{}=}\ best$\_$solution\textcolor{BrickRed}{.}getFitness\textcolor{BrickRed}{())}\textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ best$\_$solution\ \textcolor{BrickRed}{=}\ current \\
+\mbox{}\ \ \ \ \ \ \ \ \textcolor{Red}{\}} \\
+\mbox{}\ \ \ \ \ \ \ \ \textbf{\textcolor{Blue}{else}}\textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ current\ \textcolor{BrickRed}{=}\ best$\_$solution \\
+\mbox{}\ \ \ \ \ \ \ \ \textcolor{Red}{\}} \\
+\mbox{}\ \ \ \ \ \ \ \ i\textcolor{BrickRed}{++;} \\
+\mbox{}\ \ \ \ \textcolor{Red}{\}} \\
+\mbox{}\textcolor{Red}{\}} \\
+\mbox{}
