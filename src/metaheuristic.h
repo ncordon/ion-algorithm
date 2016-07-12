@@ -23,9 +23,13 @@ void initialize(vector<Solution> &ions);
 
 void redistribute(vector<Solution> &ions, Solution ref);
 
+void redistribute(vector<Solution> &ions, vector<Solution> &bests);
+
 vector<double> ion_algorithm();
 
-void updateBestSolution(Solution &best_solution, Solution ref);
+vector<double> ion_algorithm_v2();
+
+bool updateBestSolution(Solution &best_solution, Solution ref);
 
 void applyRealeaLS(Solution &solution, int &eval, int evals_ls);
 

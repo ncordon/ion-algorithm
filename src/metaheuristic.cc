@@ -80,12 +80,19 @@ void redistribute(vector<Solution> &ions, Solution ref, Solution ref_old){
                 ions[i][j] = myrandom.randreal(lbound, ubound);
         }
     }
+
+    normalize(ions);
 }
 
-void updateBestSolution(Solution &best_solution, Solution ref){
+bool updateBestSolution(Solution &best_solution, Solution ref){
+    bool best_updated = false;
+
     if (ref.getFitness() < best_solution.getFitness()){
+        best_updated = true;
         best_solution = Solution(ref);
     }
+
+    return best_updated;
 }
 
 
@@ -141,11 +148,141 @@ vector<double> ion_algorithm(){
         else{
             redistribute(cations, best_anion, best_anion_old);
             redistribute(anions, best_cation, best_cation_old);
-            normalize(cations);
-            normalize(anions);
 
             applyRealeaLS(best_solution, eval, dimension*10);
             //applyLocalSearch(best_solution, eval, dimension*10);
+            // Entramos en la siguiente iteración en fase líquida
+            liquid_phase = true;
+        }
+    }
+
+    return ((vector<double>) best_solution);
+}
+
+
+
+void updateLocations(vector<Solution> &anions, vector<Solution> cations){
+    vector<vector <double>> v_anions(anions.size(), vector<double>(dimension,0));
+    double factor, force;
+
+
+    for(unsigned int i = 0; i < anions.size(); i++){
+        for(unsigned int j = 0; j < anions.size(); j++){
+            factor = (1-(1.0/(1 + exp( (anions[j].getFitness() -
+                    anions[i].getFitness())/anions[i].getFitness() ))))/2;
+
+            if (j!=i){
+                for(unsigned int k = 0; k < dimension; k++){
+                    force = myrandom.randreal(0,1)*factor;// * (1.0/(1 + exp(-0.1/abs(anions[i][k] - anions[j][k]))));
+                    // Repulsión
+                    v_anions[i][k] += force*(anions[i][k] - anions[j][k]);
+                }
+            }
+        }
+
+        for(unsigned int j = 0; j < cations.size(); j++){
+            factor = (1.0/(1 + exp( (cations[j].getFitness() -
+                    anions[i].getFitness())/anions[i].getFitness() )))/2;
+
+            for(unsigned int k = 0; k < dimension; k++){
+                force = myrandom.randreal(0,1)*factor;// * (1.0/(1 + exp(-0.1/abs(anions[i][k] - cations[j][k]))));
+                // Repulsión
+                v_anions[i][k] += force*(cations[j][k] - anions[i][k]);
+            }
+        }
+    }
+
+    for(unsigned int i = 0; i < anions.size(); i++)
+        for(unsigned int k = 0; k < dimension; k++)
+            anions[i][k] += v_anions[i][k];
+
+    normalize(anions);
+
+}
+
+
+void redistribute(vector<Solution> &ions, vector<Solution> &bests){
+    bool bests_left = true;
+
+    for (unsigned int i = 0; i < ions.size(); i++){
+        if(bests.size()>0){
+            ions[i] = Solution(bests.back());
+
+            for (unsigned int j = 0; j < ions[i].size(); j++)
+                if(myrandom.randreal(0,1) < prob_mutation)
+                    ions[i][j] = myrandom.randreal(lbound, ubound);
+
+            bests.pop_back();
+        }
+        else
+            bests_left = false;
+
+        if(myrandom.randreal(0,1) < prob_restart || !bests_left){
+            for (unsigned int j = 0; j < ions[i].size(); j++)
+                ions[i][j] = myrandom.randreal(lbound, ubound);
+        }
+    }
+
+    normalize(ions);
+}
+
+
+vector<double> ion_algorithm_v2(){
+    vector<Solution> cations(population_size/2);
+    vector<Solution> anions(population_size/2);
+    Solution best_solution(vector<double>(dimension), numeric_limits<double>::infinity());
+    vector<Solution> best_cations;
+    vector<Solution> best_anions;
+    Solution best_cation, best_anion;
+    int eval = 0;
+    bool liquid_phase = true;
+    bool best_achieved = false;
+    bool best_updated = false;
+
+    // Inicialización
+    initialize(cations);
+    initialize(anions);
+    updateFitness(cations, eval);
+    updateFitness(anions, eval);
+
+
+    while (eval < max_eval && !best_achieved){
+        // Fase líquida
+        if (liquid_phase){
+            vector<Solution> anions_aux(anions);
+            updateLocations(anions, cations);
+            updateLocations(cations, anions_aux);
+            // Actualización de los mejores valores
+            updateFitness(cations, eval);
+            updateFitness(anions, eval);
+
+            best_cation = *min_element(cations.begin(), cations.end(), ionOrder);
+            best_anion = *min_element(anions.begin(), anions.end(), ionOrder);
+            best_cations.push_back(best_cation);
+            best_anions.push_back(best_anion);
+
+            best_updated = (updateBestSolution(best_solution, best_cation) ||
+                            updateBestSolution(best_solution, best_anion));
+
+            // Salimos de la fase liquida, entramos en la sólida
+            if (!best_updated){
+                liquid_phase = false;
+                best_updated = false;
+            }
+
+            if (best_solution.getFitness()==0)
+                best_achieved = true;
+        }
+        // Fase sólida
+        else{
+            //applyLocalSearch(best_solution, eval, dimension*10);
+            applyRealeaLS(best_solution, eval, dimension*10);
+
+            best_cations.push_back(best_solution);
+            best_anions.push_back(best_solution);
+            redistribute(anions, best_cations);
+            redistribute(cations, best_anions);
+
             // Entramos en la siguiente iteración en fase líquida
             liquid_phase = true;
         }
