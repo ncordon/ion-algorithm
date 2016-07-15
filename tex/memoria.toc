@@ -6,5 +6,5 @@
 \contentsline {subsection}{\numberline {3.1}Equilibrio Diversidad Convergencia}{5}{subsection.3.1}
 \contentsline {subsection}{\numberline {3.2}Comparaci\IeC {\'o}n con las otras metaheaur\IeC {\'\i }sticas}{6}{subsection.3.2}
 \contentsline {section}{\numberline {4}Propuestas de mejora del algoritmo}{7}{section.4}
-\contentsline {section}{\numberline {5}Empleo del software programado}{11}{section.5}
-\contentsline {section}{\numberline {6}Conclusiones aprendidas}{12}{section.6}
+\contentsline {section}{\numberline {5}Empleo del software programado}{12}{section.5}
+\contentsline {section}{\numberline {6}Conclusiones aprendidas}{13}{section.6}

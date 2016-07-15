@@ -1,0 +1,21 @@
+% Generator: GNU source-highlight, by Lorenzo Bettini, http://www.gnu.org/software/src-highlite
+\noindent
+\mbox{}\textbf{\textcolor{Blue}{def}}\ redistribute\ \textcolor{BrickRed}{(}ions\textcolor{BrickRed}{,}\ list$\_$bests\textcolor{BrickRed}{)}\textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ \textbf{\textcolor{Blue}{for}}\ ion\ \textbf{\textcolor{Blue}{in}}\ ions\textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ \ \ \ \ \textbf{\textcolor{Blue}{if}}\ rand\textcolor{BrickRed}{(}\textcolor{Purple}{0}\textcolor{BrickRed}{,}\textcolor{Purple}{1}\textcolor{BrickRed}{)}\ \textcolor{BrickRed}{\textless{}}\ prob$\_$restart \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ ion\textcolor{BrickRed}{[}j\textcolor{BrickRed}{]}\ \textcolor{BrickRed}{=}\ \textcolor{BrickRed}{[}random\textcolor{BrickRed}{(-}\textcolor{Purple}{100}\textcolor{BrickRed}{,}\textcolor{Purple}{100}\textcolor{BrickRed}{)}\ \textbf{\textcolor{Blue}{for}}\ j\ \textbf{\textcolor{Blue}{in}}\ \textcolor{Red}{\{}\textcolor{Purple}{1}\textcolor{BrickRed}{...}length\textcolor{BrickRed}{(}ion\textcolor{BrickRed}{)}\textcolor{Red}{\}}\textcolor{BrickRed}{]} \\
+\mbox{}\ \ \ \ \ \ \ \ \textbf{\textcolor{Blue}{else}}\textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textcolor{Blue}{if}}\ \textcolor{BrickRed}{!}list$\_$bests\textcolor{BrickRed}{.}empty\textcolor{BrickRed}{()}\textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ions\ \textcolor{BrickRed}{=}\ lists$\_$bests\textcolor{BrickRed}{.}pop\textcolor{BrickRed}{()} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{Red}{\}} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textcolor{Blue}{else}}\textcolor{Red}{\{} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ion\textcolor{BrickRed}{[}j\textcolor{BrickRed}{]}\ \textcolor{BrickRed}{=}\ \textcolor{BrickRed}{[}random\textcolor{BrickRed}{(-}\textcolor{Purple}{100}\textcolor{BrickRed}{,}\textcolor{Purple}{100}\textcolor{BrickRed}{)}\ \textbf{\textcolor{Blue}{for}}\ j\ \textbf{\textcolor{Blue}{in}}\ \textcolor{Red}{\{}\textcolor{Purple}{1}\textcolor{BrickRed}{...}length\textcolor{BrickRed}{(}ion\textcolor{BrickRed}{)}\textcolor{Red}{\}}\textcolor{BrickRed}{]} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{Red}{\}} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textcolor{Blue}{for}}\ j\ \textbf{\textcolor{Blue}{in}}\ \textcolor{Red}{\{}\textcolor{Purple}{1}\textcolor{BrickRed}{...}length\textcolor{BrickRed}{(}ion\textcolor{BrickRed}{)}\textcolor{Red}{\}\{} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \textbf{\textcolor{Blue}{if}}\textcolor{BrickRed}{(}rand\textcolor{BrickRed}{(}\textcolor{Purple}{0}\textcolor{BrickRed}{,}\textcolor{Purple}{1}\textcolor{BrickRed}{)}\ \textcolor{BrickRed}{\textless{}}\ prob$\_$mutation\textcolor{BrickRed}{)} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ \ ion\textcolor{BrickRed}{[}j\textcolor{BrickRed}{]}\ \textcolor{BrickRed}{=}\ random\textcolor{BrickRed}{(-}\textcolor{Purple}{100}\textcolor{BrickRed}{,}\textcolor{Purple}{100}\textcolor{BrickRed}{)} \\
+\mbox{}\ \ \ \ \ \ \ \ \ \ \ \ \textcolor{Red}{\}} \\
+\mbox{}\ \ \ \ \ \ \ \ \textcolor{Red}{\}} \\
+\mbox{}\ \ \ \ \textcolor{Red}{\}} \\
+\mbox{}\textcolor{Red}{\}} \\
+\mbox{}

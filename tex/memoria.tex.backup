@@ -271,7 +271,7 @@ operadores, van convergiendo a una posible solución del problema. Este tipo de 
   \end{itemize}
 \end{itemize}
 
-Al respecto del algoritmo que hemos escogido, el \textit{algoritmo de iones} sólo existe un trabajo publicado por Behzad Javidy, 
+Al respecto del algoritmo que hemos escogido, el \textit{algoritmo de iones} (IMO) sólo existe un trabajo publicado por Behzad Javidy, 
 Abdolreza Hatamlou y Seyedali Mirjalili, publicado a 19 de Marzo de 2015. Los autores tratan de modelar de forma
 simplificada el comportamiento de los iones en el espacio y lo comparan con algoritmos genéticos, con Differential Evolution,
 con PSO y con algoritmos de Colonia de Hormigas sobre 10 funciones test, obteniendo mejores medias y mejores desviaciones
@@ -508,7 +508,7 @@ Se modelan dos fases en el movimiento de los iones:
   \begin{table}[H]	
   \caption{Resultados del \textit{Algoritmo de iones + Simplex}}
   \centering
-  \begin{tabular}{|l|r|r|r|r|}
+  \begin{tabular}{|l|r|r|||r|r|}
   \hline
   & \textbf{D=10, IMO} & \textbf{D=10, IMO + Simplex} & \textbf{D=30, IMO} & \textbf{D=30, IMO + Simplex}\\ \hline
   f1 &  19084554.669857 &  1504465.672234 &  78738913.351420 &  4346086.095596 \\ \hline
@@ -536,7 +536,63 @@ Se modelan dos fases en el movimiento de los iones:
   
  \end{itemize}
  
- \item \textbf{Intento de mejora de diversidad}:
+ \item \textbf{Modelado de fuerzas de atracción y repulsión completas}:
+ 
+ Hemos tratado de modelar todas las fuerzas de atracción-repulsión (no tan solo las de atracción hacia
+ el mejor catión o anión, como proponían sus autores). Asimismo, las fuerzas que establecían los autores
+ originales se basaban en la distancia en $\mathbb{R}$ de las proyecciones de cada coordenada de las soluciones
+ al mejor catión/anión. Se ha intentado modelar estas fuerzas por medio de la calidad del fitness de la función
+ a minimizar. 
+ 
+ Explicaremos el algoritmo de movimiento de los iones en el espacio con aniones. Para los cationes, el procedimiento es
+ análogo, intercambiando el papel de aniones y cationes en lo que se pasa a explicar a continuación:
+ 
+ Las fuerzas de repulsión entre aniones, se modelan, para un anión $A_i$ dado como:
+ 
+ $$F_{i,j} = \frac{1}{2} \cdot \left\{1-\frac{1}{1+e^{d_{i,j}}}\right\} \qquad \qquad d_{i,j} = {f(A_j) - f(A_i)}$$ 
+ 
+ Eso implica que si dos aniones tienen \textit{fit} muy similar, apenas se producirá repulsión, mientras que si dos
+ aniones tienen \textit{fit} distintos, la fuerza de repulsión será de $\frac{1}{2}$, actualizándose las componentes de $A_i$
+ a:
+  $$A_i = A_i + \sum_{j=1, j\neq i}^{j=|Aniones|} F_{i,j}\cdot (A_i - A_j)_{i=1\ldots D}$$
+  
+ Las fuerzas de atracción de los aniones al anión dado $A_i$ se modelan como:
+ 
+ $$F_{i,j} = \frac{1}{2} \cdot \left\{1-\frac{1}{1+e^{d_{i,j}}}\right\} \qquad \qquad d_{i,j} = {f(C_j) - f(A_i)}$$ 
+
+ y se actualiza $A_i$ como sigue:
+ 
+ $$A_i = A_i + \sum_{j=1}^{j=|Cationes|} F_{i,j}\cdot (C_j - A_i)_{i=1\ldots D}$$
+ 
+ \begin{table}[H]	
+  \caption{Resultados del \textit{Algoritmo de iones mejorado + Simplex}}
+  \centering
+  \begin{tabular}{|l|r|r|||r|r|}
+  \hline
+  & \textbf{D=10, IMO} & \textbf{D=10, IMO mejorado} & \textbf{D=30, IMO} & \textbf{D=30, IMO mejorado}\\ \hline
+  f1 &  19084554.669857 &  26329.979483 &  78738913.351420 &  230907.346453 \\ \hline
+  f2 &  16536.801547 &  3721.020604 &  13697676.211767 &  9338.377990 \\ \hline
+  f3 &  21065.221623 &  18588.818078 &  77800.939852 &  73035.251038 \\ \hline
+  f4 &  58.764875 &  26.436828 &  246.343748 &  19.987042 \\ \hline
+  f5 &  20.170120 &  20.121005 &  20.468675 &  20.274226 \\ \hline
+  f6 &  7.539682 &  8.503934 &  34.790689 &  39.073894 \\ \hline
+  f7 &  0.861159 &  1.562235 &  1.102618 &  0.009251 \\ \hline
+  f8 &  28.934028 &  37.319324 &  129.837295 &  293.089630 \\ \hline
+  f9 &  26.123286 &  49.547829 &  145.730468 &  330.339667 \\ \hline
+  f10 &  1157.285877 &  970.595306 &  4219.909911 &  5467.684508 \\ \hline
+  f11 &  1144.876264 &  1054.685361 &  4881.285910 &  5191.974227 \\ \hline
+  f12 &  0.661762 &  0.739751 &  1.304201 &  1.809880 \\ \hline
+  f13 &  0.456650 &  0.484668 &  0.440387 &  0.498159 \\ \hline
+  f14 &  0.635537 &  0.490654 &  0.260939 &  0.356620 \\ \hline
+  f15 &  4.164066 &  26.022467 &  51.414376 &  182.177060 \\ \hline
+  f16 &  3.390798 &  3.541966 &  12.366670 &  12.956010 \\ \hline
+  f17 &  236940.300926 &  5905.531778 &  3390125.155789 &  16890.938744 \\ \hline
+  f18 &  6522.070266 &  9420.863246 &  110104.005591 &  8978.058073 \\ \hline
+  f19 &  8.886340 &  8.106570 &  32.516194 &  105.267242 \\ \hline
+  f20 &  13892.000148 &  4783.046252 &  53412.013643 &  31203.001882 \\ \hline
+  \end{tabular}
+  \end{table}
+ 
 \end{itemize}
 
 
