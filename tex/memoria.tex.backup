@@ -1,0 +1,577 @@
+\documentclass[a4paper,11pt]{article}
+% Símbolo del euro
+\usepackage[gen]{eurosym}
+% Codificación
+\usepackage[utf8]{inputenc}
+% Idioma
+\usepackage[spanish]{babel} % English language/hyphenation
+\selectlanguage{spanish}
+% Hay que pelearse con babel-spanish para el alineamiento del punto decimal
+\decimalpoint
+\usepackage{dcolumn}
+\newcolumntype{d}[1]{D{.}{\esperiod}{#1}}
+\makeatletter
+\addto\shorthandsspanish{\let\esperiod\es@period@code}
+\makeatother
+
+\usepackage[usenames,dvipsnames]{color} % Coloring code
+
+\usepackage{csvsimple}
+\usepackage{adjustbox}
+\newsavebox\ltmcbox
+
+% Ecuaciones aumentadas
+\everymath{\displaystyle}
+
+% Para matrices
+\usepackage{amsmath}
+
+% Símbolos matemáticos
+\usepackage{amssymb}
+\let\oldemptyset\emptyset
+\let\emptyset\varnothing
+
+% Hipervínculos
+\usepackage{url}
+
+\usepackage[section]{placeins} % Para gráficas en su sección.
+\usepackage{mathpazo} % Use the Palatino font
+\usepackage[T1]{fontenc} % Required for accented characters
+\newenvironment{allintypewriter}{\ttfamily}{\par}
+\setlength{\parindent}{0pt}
+\parskip=8pt
+\linespread{1.05} % Change line spacing here, Palatino benefits from a slight increase by default
+
+
+% Imágenes
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{wrapfig} % Allows in-line images
+
+
+
+% Márgenes
+\usepackage{geometry}
+ \geometry{
+ a4paper,
+ total={210mm,297mm},
+ left=30mm,
+ right=30mm,
+ top=25mm,
+ bottom=25mm,
+ }
+
+
+% Referencias
+\usepackage{fncylab}
+\labelformat{figure}{\textit{\figurename\space #1}}
+
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks   = true, %Colours links instead of ugly boxes
+  urlcolor     = blue, %Colour for external hyperlinks
+  linkcolor    = blue, %Colour of internal links
+  citecolor   = red %Colour of citations
+}
+
+
+\makeatletter
+\renewcommand{\@listI}{\itemsep=0pt} % Reduce the space between items in the itemize and enumerate environments and the bibliography
+\newcommand{\imagent}[4]{
+  \begin{wrapfigure}{#4}{0.7\textwidth}
+    \begin{center}
+    \includegraphics[width=0.7\textwidth]{#1}
+    \end{center}
+    \caption{#3}
+    \label{#4}
+  \end{wrapfigure}
+}
+
+
+\newcommand{\imagen}[4]{
+  \begin{minipage}{\linewidth}
+    \centering
+    \includegraphics[width=#4\textwidth]{#1}
+    \captionof{figure}{#2}
+    \label{#3}
+  \end{minipage} 
+}
+
+\newcommand{\imgn}[3]{
+  \begin{minipage}{\linewidth}
+    \centering
+    \includegraphics[width=#3\textwidth]{#1}
+    \captionof{figure}{#2}
+  \end{minipage} 
+}
+
+% Ejemplo de parámetro: ILS.r
+\newcommand{\hrefr}[1]{
+\href{../bin/#1}{#1}
+}
+
+%Customize enumerate tag
+\usepackage{enumitem}
+%Sections don't get numbered
+%\setcounter{secnumdepth}{0}
+\newcommand{\blue}[1]{\textcolor{blue}{#1}}
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% University Assignment Title Page 
+% LaTeX Template
+% Version 1.0 (27/12/12)
+%
+% This template has been downloaded from:
+% http://www.LaTeXTemplates.com
+%
+% Original author:
+% WikiBooks (http://en.wikibooks.org/wiki/LaTeX/Title_Creation)
+% Modified by: NCordon (https://github.com/NCordon)
+%
+% License:
+% CC BY-NC-SA 3.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
+% 
+% Instructions for using this template:
+% This title page is capable of being compiled as is. This is not useful for 
+% including it in another document. To do this, you have two options: 
+%
+% 1) Copy/paste everything between \begin{document} and \end{document} 
+% starting at \begin{titlepage} and paste this into another LaTeX file where you 
+% want your title page.
+% OR
+% 2) Remove everything outside the \begin{titlepage} and \end{titlepage} and 
+% move this file to the same directory as the LaTeX file you wish to add it to. 
+% Then add \input{./title_page_1.tex} to your LaTeX file where you want your
+% title page.
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{titlepage}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}} % Defines a new command for the horizontal lines, change thickness here
+
+\center % Center everything on the page
+ 
+%----------------------------------------------------------------------------------------
+%	HEADING SECTIONS
+%----------------------------------------------------------------------------------------
+\textsc{\LARGE Universidad de Granada}\\[1.5cm]
+\textsc{\Large Metaheaurísticas}\\[0.5cm] 
+
+%----------------------------------------------------------------------------------------
+%	TITLE SECTION
+%----------------------------------------------------------------------------------------
+\bigskip
+\HRule \\[0.4cm]
+{ \huge \bfseries Práctica Opcional}\\[0.4cm] % Title of your document
+{ \huge \bfseries Algoritmo de Real Coding}\\
+\HRule \\[1.5cm]
+ 
+%----------------------------------------------------------------------------------------
+%	AUTHOR SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}{\textwidth}
+\begin{center} \large
+\emph{Algoritmo de iones}\\
+\end{center}
+\end{minipage}
+
+%----------------------------------------------------------------------------------------
+%	LOGO SECTION
+%----------------------------------------------------------------------------------------
+
+\begin{center}
+\includegraphics[width=8cm]{./ugr.jpg}
+\end{center}
+%----------------------------------------------------------------------------------------
+
+\begin{minipage}{\textwidth}
+\begin{center} \large
+Ignacio Cordón Castillo, 25352973G\\
+\url{nachocordon@correo.ugr.es}\\
+\ \\
+$4^{\circ}$ Doble Grado Matemáticas Informática\\
+Grupo Prácticas Viernes
+\end{center}
+\end{minipage}
+
+
+\vspace{\fill}% Fill the rest of the page with whitespace
+\large\today
+\end{titlepage}  
+
+\newpage
+\tableofcontents
+\newpage
+% Examples of inclussion of images
+%\imagent{ugr.jpg}{Logo de prueba}{ugr}
+%\imagen{ugr.jpg}{Logo de prueba}{ugr2}{size relative to the \textwidth}
+
+\section{Introducción}
+Como sabemos, se trata de mejorar una metaheurística para minimizar las 20 primeras funciones 
+de codificación real de la competición CEC2014, usando:
+
+\begin{itemize}
+  \item Dimensión D valuada a 10 y 30.
+  \item Número de evaluaciones de cada función en una ejecucion del algoritmo: 100000 en dimensión 10, 300000
+  en dimensión 30.
+  \item 25 ejecuciones por función.
+  \item Espacio de búsqueda de soluciones: $[-100, 100]^D$
+\end{itemize}
+
+Se compararán las medias obtenidas con estas premisas de ejecución para cada función. Además, debemos tener
+en cuenta que el mínimo de la función $i-$ésima es $100\cdot i$. Cuando obtengamos los resultados, computarermos
+el error respecto a dicho mínimo que hemos obtenido, de manera que buscaremos que los resultados en media
+para cada una de las funciones se aproximen lo máximo posible a 0.
+
+\section{Estado del arte}
+
+La mayoría de técnicas para resolver problemas de optimización de funciones (las que nos ocupan son no lineales y muchas no diferenciables)
+son algoritmos poblaciones, un tipo de algoritmos estocásticos en los que tenemos una serie de soluciones a las que, aplicados una serie de
+operadores, van convergiendo a una posible solución del problema. Este tipo de algoritmos pueden ser divididos en tres subcategorías:
+
+\begin{itemize}
+ \item \textit{Algoritmos bioinspirados}.
+ 
+  Basados mayormente en el modelado del comportamiento de enjambres o manadas de animales
+  en la naturaleza. En este sentido, destaca PSO, algoritmo que imita el movimiento de las aves, o ACO (\textit{Ant Colony
+  Optimization}). Recientemente han surgido toda una serie de algoritmos bioinspirados: \textit{Bat Algorithm}, \textit{Firefly
+  Algorithm}, \textit{Cuckoo Search}, \textit{Grey Wolf Optimizatier}
+  
+ \item \textit{Algoritmos genéticos}.
+  Los primeros estudios versaban sobre algoritmos genéticos con codificación real donde los investigadores se centraron durante mucho tiempo en
+  encontrar nuevos operadores de cruce fructíferos. Fueron Rechenberg y Schwefel quienes propusieron en 1964 las estrategias
+  de evolución, que se basaban en la auto-adaptabilidad de los parámetros. Nikolaus Hansen obtuvo en 1996 muy buenos resultados
+  a este respecto modelando una adaptación mediante matrices de covarianza a través de su algoritmo CMAES.
+  
+  Posteriormente surgió la evolución diferencial, propuesta por Storm en 1997. Se trataba de un proceso estocástico por el que
+  llevando una población de tuplas $n$-dimensionales, se iban mutando y recombinando para dar lugar a nuevas soluciones en un espacio
+  de búsqueda. A este respecto, tenemos por ejemplo SaDE o JADE, algoritmos de Differential Evolution que auto-adaptan los 
+  parámetros a los espacios de búsqueda para generar soluciones. Históricamente, la potencia de los algoritmos de Differential
+  Evolution ha sido altísimo. De hecho una variante de este algoritmo, L-SHADE, resultó vencedora del reto completo (30 funciones,
+  no 20) al que nos enfrentamos.
+  
+  En este campo también sobresalen la \textit{Programación Genética} y el \textit{Biogeography-based Optimizer}
+
+ \item \textit{Algoritmos inspirados en la física}: la inspiración de estos algoritmos surge de leyes o fenómenos físicos.
+ La diferencia respecto a los algoritmos bioinspirados es que la recombinación de soluciones se modela siguiendo ciertas
+ leyes físicas, o inspirándose en ellas. Podemos citar dentro de esta subcategoría:
+ 
+  \begin{itemize}
+    \item \textit{Algoritmo de Optimización Magnética}: simula una serie de fuerzas electromagnéticas para desplazar las posiciones
+    de las posibles soluciones en el espacio de búsqueda, ejerciendo las mejores soluciones mayor atracción hacia ellas.
+    
+    \item \textit{Algoritmo de Búsqueda Gravitacional}: se consideran una serie de masas que se atraen, siguiendo la ley
+    Newtoniana del movimiento, en base a fuerzas modeladas a partir del valor que cada masa (o posible solución) produce
+    en la función de \textit{fitness}.
+    
+    \item \textit{Algoritmo de iones}: el algoritmo que nos ocupa. Se modelan las soluciones en el espacio a través de posciones
+    que pueden tener carga positiva o negativa. Cargas de distinto signo se atraen, mientras que cargas de signo opuesto se repelen.
+  \end{itemize}
+\end{itemize}
+
+Al respecto del algoritmo que hemos escogido, el \textit{algoritmo de iones} sólo existe un trabajo publicado por Behzad Javidy, 
+Abdolreza Hatamlou y Seyedali Mirjalili, publicado a 19 de Marzo de 2015. Los autores tratan de modelar de forma
+simplificada el comportamiento de los iones en el espacio y lo comparan con algoritmos genéticos, con Differential Evolution,
+con PSO y con algoritmos de Colonia de Hormigas sobre 10 funciones test, obteniendo mejores medias y mejores desviaciones
+típicas que los citados algoritmos para unos parámetros prefijados.
+
+\section{Descripción del algoritmo}
+
+El algoritmo se basa en el movimiento de los iones(soluciones) en el espacio. Se inicia una población de iones (igual número
+de cationes que de aniones) a soluciones aleatorias en el espacio.
+Se modelan dos fases en el movimiento de los iones:
+\begin{itemize}
+ \item \textbf{Fase líquida}
+ 
+ Para cada iteración en la que nos encontremos en fase líquida, efectuamos lo descrito a continuación.
+ 
+ Se encuentra el mejor catión $C_{best}$ de entre la población, en términos de \textit{fitness}.
+ 
+ Para el anión $i-$ésimo, $A_i$, y su componente $j-$ésima, se modela una fuerza de atracción:
+ 
+ $$F_{i,j} = \frac{1}{1+e^{d_{i,j}}} \qquad \qquad d_{i,j} = {\frac{-0.1}{|A_{i}[j] - C_{best}[j]|}}$$ 
+ 
+ y se actualiza la componente del anión a:
+ 
+ $$A_i[j] = A_i[j] + F_{i,j} \cdot (C_{best}[j] - A_i[j])$$
+ 
+ Se efectúa un procedimiento análogo con los cationes, acercándolos al mejor anión.
+ 
+ La idea es buena, dado que si tenemos un catión (resp.anión) bueno, se modifican los aniones para que las componentes se
+ empiecen a parecer a los de ese catión, con mayor grado de convergencia en las componentes más cercanas, y menor en las más
+ lejanas.
+ 
+ Además, la convergencia puntos en el espacio debería estar garantizada, puesto que la sucesión $\left\{\frac{1}{2^n}\right\}$ converge
+ a 0, y se tiene $ \frac{1}{2} \le F_{i,j} \le 1$. Pasaremos a discutir esto en la siguiente sección.
+ 
+ 
+ \item \textbf{Fase sólida}: Se modela una fase en la que una vez alcanzada la convergencia a una solución, podamos movernos
+ a otros puntos del espacio.
+ 
+ Efectuamos el siguiente proceso, que es una modificación del propuesto por los autores, puesto que en el proceso descrito
+ en el artículo científico original se presentan algunas imprecisiones:
+ 
+  \small{\texttt{\input{solidstate.tex}}}
+  \normalsize
+
+ La probabilidad de reinicio de soluciones propuesta por los autores en su \textit{paper} original es del 0.05, aunque hemos
+ hecho un pequeño ajuste de los parámetros del algoritmo, a fin de optimizarlos.
+ 
+ Cuando se reinician tanto los cationes como los aniones, se hace por supuesto a tuplas en el espacio de búsqueda: $[-100,100]^D$
+ 
+ \texttt{best\_old\_cation} y \texttt{best\_old\_anion} representan los mejores iones de cada clase en la anterior ejecución del
+ algoritmo, mientras \texttt{best\_cation} y \texttt{best\_anion} representan los mejores iones de cada clase en la actual 
+ ejecución del algoritmo. Cuando se recombinan los actuales iones, cationes con los mejores cationes, iones respectivamente,
+ el objetivo es explorar otras zonas del espacio de búsqueda. La eficacia de este aspecto será una de las cuestiones a debatir
+ en las mejoras del algoritmo.
+ 
+ Cuando no se reinician las soluciones, sino que se recombinan usando los mejores aniones y cationes de esta o anteriores ejecuciones,
+ se observó que las soluciones no tenían porqué quedarse en el espacio de búsqueda, así que se implementó un sencillo procedimiento
+ de normalización de soluciones, devolviéndolas a los límites de nuestro dominio:
+ 
+  \small{\texttt{\input{normalization.tex}}}
+  \normalsize
+ 
+ Asimismo, la condición que modelaban los autores originalmente para entrar en esta fase sólida era:
+ 
+  \small{\texttt{\input{condsolid.tex}}}
+  \normalsize
+  
+ Pero usar dicha división entre 2 parecía algo ilógico. Ésta constituye una de las grandes imprecisiones que se comentaban
+ anteriormente. Por ello se suprimió dicha división por 2. Más aún, ni siquiera sin esa división por 2 parecemos asegurar que abandonemos
+ la fase líquida en algún momento. Esta será una de las cuestiones a debatir en las mejoras del algoritmo.
+\end{itemize} 
+ 
+ \subsection{Equilibrio Diversidad Convergencia}
+ 
+  Parece existir un problema con la convergencia a puntos del espacio, puesto que podríamos tener dos puntos del espacio que
+  fueran óptimos locales en una cierta zona muy cercana, el mejor anión situado en uno de ellos, y el mejor catión en otro.
+  Podríamos tener a todos los aniones excepto el mejor, en una zona lo suficientemente cercana al mejor catión; y a todos
+  los cationes, excepto el mejor, en una zona lo suficientemente cercana al mejor anión. Se tendría que en cada iteración,
+  todos los aniones se intercambian con los cationes, por la cercanía de las partículas, y todos los cationes se intercambian
+  con los aniones, y nunca llegaríamos a tener la convergencia a un único punto.
+  
+  Matemáticamente, sea $f$ la función a minimizar en un espacio $[-100,100]^D$, y sean $x,y$ en dicho espacio. Supongamos:
+  
+  $$\exists B(x,\delta_1), B(y, \delta_2)$$ verificándose que $$B(x,\delta_1) \bigcap B(x,\delta_2) = \emptyset $$
+  
+  $f$ tiene un mínimo local en $B(x,\delta_1)$ y otro en $B(y,\delta_1)$
+  
+  se cumple que $C_{best}\in B(x,\delta_1)$, $A_{best}\in B(x,\delta_2)$, y además $A_i\in B(x,\delta_1) \forall A_i \neq A_{best}$ 
+  y $C_i\in B(x,\delta_2) \forall C_i \neq C_{best}$, con $F_{i,j} \approx 1$. Podríamos entonces no tener convergencia
+  nunca a un único punto, o incluso que fuese tan lenta que estuviésemos perdiendo un montón de evaluaciones con soluciones
+  de \textit{fitness} similar.
+  
+  Es más, supongamos en lo que sigue que tenemos convergencia a un único punto. Aún así, el mecanismo para entrar
+  a fase líquida no parece del todo certero, porque nunca podemos asegurar que se vaya  cumplir que:
+  
+  \small{\texttt{\input{condsolid.tex}}}
+  \normalsize
+  
+  a pesar de haber alcanzado un óptimo local. Aún así, si este mecanismo fuese del todo certero, deberíamos buscar otro método
+  para introducir mayor diversidad en la población de iones.
+ 
+ \subsection{Comparación con las otras metaheaurísticas}
+ 
+ Hemos obtenido los siguientes resultados, tras la implementación del algoritmo con las variaciones descritas, pero filedigno
+ a lo expuesto por sus autores:
+ 
+ 
+  \begin{table}[H]	
+  \caption{Resultados del \textit{Algoritmo de iones}}
+  \centering
+  \begin{tabular}{|l|r|r|}
+  \hline
+  &  \textbf{Dimensión 10}& \textbf{Dimensión 30} \\ \hline
+  f1 &  19084554.669857 &  78738913.351420 \\ \hline
+  f2 &  16536.801547 &  13697676.211767 \\ \hline
+  f3 &  21065.221623 &  77800.939852 \\ \hline
+  f4 &  58.764875 &  246.343748 \\ \hline
+  f5 &  20.170120 &  20.468675 \\ \hline
+  f6 &  7.539682 &  34.790689 \\ \hline
+  f7 &  0.861159 &  1.102618 \\ \hline
+  f8 &  28.934028 &  129.837295 \\ \hline
+  f9 &  26.123286 &  145.730468 \\ \hline
+  f10 &  1157.285877 &  4219.909911 \\ \hline
+  f11 &  1144.876264 &  4881.285910 \\ \hline
+  f12 &  0.661762 &  1.304201 \\ \hline
+  f13 &  0.456650 &  0.440387 \\ \hline
+  f14 &  0.635537 &  0.260939 \\ \hline
+  f15 &  4.164066 &  51.414376 \\ \hline
+  f16 &  3.390798 &  12.366670 \\ \hline
+  f17 &  236940.300926 &  3390125.155789 \\ \hline
+  f18 &  6522.070266 &  110104.005591 \\ \hline
+  f19 &  8.886340 &  32.516194 \\ \hline
+  f20 &  13892.000148 &  53412.013643 \\ \hline
+  \end{tabular}  
+  \label{ion-results}
+  \end{table}
+
+
+\section{Propuestas de mejora del algoritmo}
+\begin{itemize}
+ \item \textbf{Optimización de parámetros}.
+ 
+ A este efecto, hemos probado, para las 5 primeras funciones (debido a la falta de tiempo), los siguientes valores de tamaño
+ de población de iones: $\big\{10, 20, 30, 40, 50\big\}$ y los siguientes valores de probabilidad de reinicio: $\big\{0.05, 0.1, 0.15, 0.2\big\}$
+ 
+ obteniendo los mejores resultados con un tamaño poblacional de $50$ iones, y una probabilidad de reinicio del $0.1$, que corresponden
+ a los resultados presentados en el punto número 3
+ 
+ \item \textbf{Hibridación con búsqueda local}.
+ 
+ Buscamos que el algoritmo tal cual nos proporcione la diversidad y la búsqueda local el factor de convergencia. 
+ 
+ 
+ Se programó una búsqueda local que no funcionaba comedidamente, que fundamentalmente, realizaba las siguientes operaciones:
+ 
+  \small{\texttt{\input{localsearch.tex}}}
+  \normalsize
+  
+  donde se escogía un \texttt{epsilon = 0.25} y \texttt{evals\_ls = 10*dimension}, es decir, se sumaba un vector de norma euclídea
+  menor o igual a epsilon al vector mejor solución, y si encontrábamos mejora, aplicábamos el mismo procedimiento al vector mejorado,
+  hasta agotar las $10*D$ iteraciones.
+  
+ Posteriormente, probamos a hibridar con \textit{SolisWets}, \textit{CMAES} y \textit{Simplex}, búsquedas locales programadas en el software Realea de Daniel Molina distribuido
+ bajo licencia GPL. La estrategia para hibridar fue introducir una búsqueda local en fase sólida sobre la mejor solución
+ encontrada hasta el momento. Empleamos $10\cdot D$ iteraciones en \textit{Solis Wets}, en \textit{Simplex} y en \textit{CMAES}.
+ 
+ 
+ Los resultados obtenidos, han sido:
+ 
+ \begin{itemize}
+  \item \textbf{Solis Wets}
+  \begin{table}[H]	
+  \caption{Resultados del \textit{Algoritmo de iones + Solis Wets}}
+  \centering
+  \begin{tabular}{|l|r|r|||r|r|}
+  \hline
+  & \textbf{D=10, IMO} & \textbf{D=10, IMO + SW} & \textbf{D=30, IMO} & \textbf{D=30, IMO + SW}\\ \hline
+  f1 &  19084554.669857 &  363696.039099 &  78738913.351420 &  455502.264533 \\ \hline
+  f2 &  16536.801547 &  1313.954155 &  13697676.211767 &  13127.874215 \\ \hline
+  f3 &  21065.221623 &  18688.493110 &  77800.939852 &  71748.162238 \\ \hline
+  f4 &  58.764875 &  24.202097 &  246.343748 &  64.979294 \\ \hline
+  f5 &  20.170120 &  19.999690 &  20.468675 &  19.999692 \\ \hline
+  f6 &  7.539682 &  7.402224 &  34.790689 &  34.666686 \\ \hline
+  f7 &  0.861159 &  0.353630 &  1.102618 &  0.011314 \\ \hline
+  f8 &  28.934028 &  26.187262 &  129.837295 &  124.369383 \\ \hline
+  f9 &  26.123286 &  25.470889 &  145.730468 &  158.078285 \\ \hline
+  f10 &  1157.285877 &  948.631408 &  4219.909911 &  3889.044913 \\ \hline
+  f11 &  1144.876264 &  1066.564468 &  4881.285910 &  4295.850074 \\ \hline
+  f12 &  0.661762 &  0.496767 &  1.304201 &  1.094158 \\ \hline
+  f13 &  0.456650 &  0.311175 &  0.440387 &  0.432896 \\ \hline
+  f14 &  0.635537 &  0.382150 &  0.260939 &  0.257654 \\ \hline
+  f15 &  4.164066 &  3.857350 &  51.414376 &  59.799756 \\ \hline
+  f16 &  3.390798 &  3.449191 &  12.366670 &  12.554226 \\ \hline
+  f17 &  236940.300926 &  60438.604437 &  3390125.155789 &  46233.218822 \\ \hline
+  f18 &  6522.070266 &  7802.026855 &  110104.005591 &  1599.150327 \\ \hline
+  f19 &  8.886340 &  7.871310 &  32.516194 &  38.234215 \\ \hline
+  f20 &  13892.000148 &  7092.191695 &  53412.013643 &  31560.507434 \\ \hline
+  \end{tabular}
+  \end{table}
+
+  
+  \item \textbf{CMAES}
+  \begin{table}[H]	
+  \caption{Resultados del \textit{Algoritmo de iones + CMAES}}
+  \centering
+  \begin{tabular}{|l|r|r|||r|r|}
+  \hline
+  & \textbf{D=10, IMO} & \textbf{D=10, IMO + CMAES} & \textbf{D=30, IMO} & \textbf{D=30, IMO + CMAES}\\ \hline
+  f1 &  19084554.669857 &  7787409.210024 &  78738913.351420 &  603080.766525 \\ \hline
+  f2 &  16536.801547 &  1622.048245 &  13697676.211767 &  9668.463875 \\ \hline
+  f3 &  21065.221623 &  17145.712244 &  77800.939852 &  80051.795107 \\ \hline
+  f4 &  58.764875 &  23.531004 &  246.343748 &  27.503332 \\ \hline
+  f5 &  20.170120 &  19.999604 &  20.468675 &  19.999750 \\ \hline
+  f6 &  7.539682 &  7.650586 &  34.790689 &  34.910613 \\ \hline
+  f7 &  0.861159 &  0.783753 &  1.102618 &  0.007092 \\ \hline
+  f8 &  28.934028 &  27.460799 &  129.837295 &  122.737655 \\ \hline
+  f9 &  26.123286 &  22.127844 &  145.730468 &  151.949401 \\ \hline
+  f10 &  1157.285877 &  1087.485644 &  4219.909911 &  3899.973468 \\ \hline
+  f11 &  1144.876264 &  1070.067969 &  4881.285910 &  4053.327961 \\ \hline
+  f12 &  0.661762 &  0.568838 &  1.304201 &  0.787965 \\ \hline
+  f13 &  0.456650 &  0.310108 &  0.440387 &  0.387936 \\ \hline
+  f14 &  0.635537 &  0.454480 &  0.260939 &  0.245177 \\ \hline
+  f15 &  4.164066 &  3.668623 &  51.414376 &  57.776390 \\ \hline
+  f16 &  3.390798 &  3.375496 &  12.366670 &  12.408639 \\ \hline
+  f17 &  236940.300926 &  191239.202539 &  3390125.155789 &  53082.455802 \\ \hline
+  f18 &  6522.070266 &  7052.486699 &  110104.005591 &  2039.587266 \\ \hline
+  f19 &  8.886340 &  7.586558 &  32.516194 &  40.452787 \\ \hline
+  f20 &  13892.000148 &  9850.321392 &  53412.013643 &  34683.954916 \\ \hline
+  \end{tabular}
+  \end{table}
+  
+  
+  \item \textbf{Simplex}
+  \begin{table}[H]	
+  \caption{Resultados del \textit{Algoritmo de iones + Simplex}}
+  \centering
+  \begin{tabular}{|l|r|r|r|r|}
+  \hline
+  & \textbf{D=10, IMO} & \textbf{D=10, IMO + Simplex} & \textbf{D=30, IMO} & \textbf{D=30, IMO + Simplex}\\ \hline
+  f1 &  19084554.669857 &  1504465.672234 &  78738913.351420 &  4346086.095596 \\ \hline
+  f2 &  16536.801547 &  12474.120134 &  13697676.211767 &  2561077.417506 \\ \hline
+  f3 &  21065.221623 &  7833.146464 &  77800.939852 &  49242.768978 \\ \hline
+  f4 &  58.764875 &  28.881786 &  246.343748 &  89.359609 \\ \hline
+  f5 &  20.170120 &  20.074512 &  20.468675 &  20.095649 \\ \hline
+  f6 &  7.539682 &  6.171463 &  34.790689 &  30.754850 \\ \hline
+  f7 &  0.861159 &  0.571411 &  1.102618 &  0.062850 \\ \hline
+  f8 &  28.934028 &  16.717241 &  129.837295 &  67.033718 \\ \hline
+  f9 &  26.123286 &  25.795814 &  145.730468 &  150.276753 \\ \hline
+  f10 &  1157.285877 &  685.986171 &  4219.909911 &  2185.469491 \\ \hline
+  f11 &  1144.876264 &  1030.179614 &  4881.285910 &  3892.796287 \\ \hline
+  f12 &  0.661762 &  0.431555 &  1.304201 &  0.501540 \\ \hline
+  f13 &  0.456650 &  0.315380 &  0.440387 &  0.466117 \\ \hline
+  f14 &  0.635537 &  0.393064 &  0.260939 &  0.264987 \\ \hline
+  f15 &  4.164066 &  3.016509 &  51.414376 &  30.881912 \\ \hline
+  f16 &  3.390798 &  3.327450 &  12.366670 &  12.234189 \\ \hline
+  f17 &  236940.300926 &  209208.552698 &  3390125.155789 &  841071.802922 \\ \hline
+  f18 &  6522.070266 &  7622.195964 &  110104.005591 &  1837.062837 \\ \hline
+  f19 &  8.886340 &  4.769108 &  32.516194 &  19.797393 \\ \hline
+  f20 &  13892.000148 &  5046.809383 &  53412.013643 &  41976.014409 \\ \hline
+  \end{tabular}
+  \end{table}
+  
+ \end{itemize}
+ 
+ \item \textbf{Intento de mejora de diversidad}:
+\end{itemize}
+
+
+
+\section{Empleo del software programado}
+
+Para compilar el software proporcionado, basta hacer, en el directorio \texttt{src}, lo siguiente:
+
+\begin{verbatim}
+    Cmake .
+    make
+    ./main
+\end{verbatim}
+
+Cuando ejecutamos el programa, obtenemos para dimensión 10 y 30, la evaluación que producen el algoritmo de iones.
+Si se quiere modificar algún parámetro, debe hacerse en el fichero \texttt{./src/aux.cpp}. 
+
+\begin{itemize}
+ \item \texttt{num\_ejecuciones}. Fijado a 25.
+ \item \texttt{population\_size}. Tamaño de la población total de iones en cada iteración. La mitad serán aniones y la otra
+ mitad cationes.
+ \item \texttt{lbound} y \texttt{ubound}. Son los límites del espacio $[lbound, ubound]^D$.
+ \item \texttt{prob\_restart}. Probabilidad de reinicio de aniones y cationes. Por defecto a 0.1.
+ \item \texttt{type\_ls}. Puede ser ``sw``, ``cmaes`` o ''simplex``. Tipo de búsqueda local a emplear.
+\end{itemize}
+
+Si se ha modificado algún parámetro, habrá que hacer:
+\begin{verbatim}
+    make
+    ./main
+\end{verbatim}
+
+
+
+\section{Conclusiones aprendidas}
+
+
+\end{document}
