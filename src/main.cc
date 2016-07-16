@@ -24,7 +24,7 @@ int main(){
 
 		for(int f_num=1; f_num <= 20; f_num++){
 			func_num = f_num;
-
+			if(f_num!=6){
 			cout << "f" << f_num << ", ";
 			suma = 0;
 
@@ -36,6 +36,7 @@ int main(){
 
 			cout << suma/num_ejecuciones << endl;
 			//total_sum += suma/num_ejecuciones;
+}
 		}
 	}
 

@@ -149,7 +149,7 @@ vector<double> ionAlgorithm(){
             redistribute(cations, best_anion, best_anion_old);
             redistribute(anions, best_cation, best_cation_old);
 
-            applyRealeaLS(best_solution, eval, dimension*10);
+            applyRealeaLS(best_solution, eval, dimension*1000);
             //applyLocalSearch(best_solution, eval, dimension*10);
             // Entramos en la siguiente iteración en fase líquida
             liquid_phase = true;
@@ -161,7 +161,7 @@ vector<double> ionAlgorithm(){
 
 
 
-void updateLocations(vector<Solution> &anions, vector<Solution> cations, double delta){
+void updateLocations(vector<Solution> &anions, vector<Solution> cations){
     vector<vector <double>> v_anions(anions.size(), vector<double>(dimension,0));
     double factor, force;
 
@@ -183,10 +183,10 @@ void updateLocations(vector<Solution> &anions, vector<Solution> cations, double 
 
         for(unsigned int j = 0; j < cations.size(); j++){
             factor = (1.0/(1 + exp( (cations[j].getFitness() -
-                    anions[i].getFitness())/anions[i].getFitness() )));///2;
+                    anions[i].getFitness())/anions[i].getFitness() )))/2;
 
             for(unsigned int k = 0; k < dimension; k++){
-                force = myrandom.randreal(0,delta)*factor;// * (1.0/(1 + exp(-0.1/abs(anions[i][k] - cations[j][k]))));
+                force = myrandom.randreal(0,1)*factor;// * (1.0/(1 + exp(-0.1/abs(anions[i][k] - cations[j][k]))));
                 // Repulsión
                 v_anions[i][k] += force*(cations[j][k] - anions[i][k]);
             }
@@ -255,9 +255,9 @@ vector<double> ionAlgorithm_v2(){
         // Fase líquida
         if (liquid_phase){
             vector<Solution> anions_aux(anions);
-            updateLocations(anions, cations, 0.5);
+            updateLocations(anions, cations);
             //updateLocations(cations, anions_aux, delta);
-            updateLocations(cations, anions, 0.5);
+            updateLocations(cations, anions);
             vector<Solution> cations_aux(anions);
             anions = cations;
             cations = cations_aux;
@@ -276,21 +276,6 @@ vector<double> ionAlgorithm_v2(){
                             best_updated);
 
             // Salimos de la fase liquida, entramos en la sólida
-            /*
-            if (!best_updated){
-                not_mejora++;
-                delta*=2.0;
-            }
-            else{
-                not_mejora = 0;
-                delta/=2.0;
-            }
-
-            if (not_mejora == tope_not_mejora){
-                liquid_phase = false;
-                not_mejora=0;
-                tope_not_mejora/=2;
-            }*/
 
             if (eval%tope_eval == 0){
                 liquid_phase = false;

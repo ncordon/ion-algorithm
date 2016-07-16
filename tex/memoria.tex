@@ -240,6 +240,7 @@ operadores, van convergiendo a una posible solución del problema. Este tipo de 
   Algorithm}, \textit{Cuckoo Search}, \textit{Grey Wolf Optimizatier}
   
  \item \textit{Algoritmos genéticos}.
+ 
   Los primeros estudios versaban sobre algoritmos genéticos con codificación real donde los investigadores se centraron durante mucho tiempo en
   encontrar nuevos operadores de cruce fructíferos. Fueron Rechenberg y Schwefel quienes propusieron en 1964 las estrategias
   de evolución, que se basaban en la auto-adaptabilidad de los parámetros. Nikolaus Hansen obtuvo en 1996 muy buenos resultados
@@ -409,6 +410,8 @@ Se modelan dos fases en el movimiento de los iones:
   \label{ion-results}
   \end{table}
 
+  El algoritmo se encuentra claramente lejísimos de todas las metaheurísticas de \textit{differential evolution} [\ref{difev}], y
+  por supuesto de las de la competición de CEC2014 [\ref{allresults}].
 
 \section{Propuestas de mejora del algoritmo}
 \begin{itemize}
@@ -612,6 +615,100 @@ Se modelan dos fases en el movimiento de los iones:
   \end{tabular}
   \end{table}
  
+ 
+ Como podemos observar, hemos conseguido mejorar mucho los resultados más malos de la anterior versión del algoritmo, pero
+ en contraposición, hemos empeorado un poco los mejores resultados.
+ 
+ \item Algoritmo mejorado v2 + Búsqueda local con nuevo equilibrio diversidad-convergencia
+ 
+ Introducimos más variaciones en el algoritmo con objetivo de mejorar su diversidad, y damos más potencia a CMAES (búsqueda
+ local más potente de las que disponemos, pero que más evaluaciones consume). En cada fase sólida, ejecutamos CMAES con tope
+ de evaluaciones $D \cdot 10000$. 
+ 
+ Algunas de las variaciones introducidas, respecto a lo descrito anteriormente, han sido:
+ \begin{itemize}
+  \item Intercambio de cationes y de aniones al comenzar cada fase líquida
+  \item Presencia sólo de fuerzas atractivas, no repulsivas. Las fuerzas de atracción son las descritas en la variación anterior.
+  Para aniones: 
+  
+     $$F_{i,j} = \frac{1}{2} \cdot \left\{1-\frac{1}{1+e^{d_{i,j}}}\right\} \qquad \qquad d_{i,j} = {f(C_j) - f(A_i)}$$ 
+     
+  Para cationes, análogo.
+  
+  \item Los aniones se actualizan con la lista de mejores aniones hasta el momento, los cationes con la lista de mejores cationes
+  hasta el momento, y no al revés como en la variación anterior, ya que es indistinto, si cambiamos a cada paso el papel
+  de los aniones y el de los cationes.
+  
+  \item La fase líquida se para tras un tope de evaluaciones. Hemos seleccionado 1000 evaluaciones como tope, que parece
+  estar dando buenos resultados.
+ \end{itemize}
+ 
+  Obtenemos unos resultados sorprendentemente buenos, en comparación a los resultados del
+ algoritmo de iones desde los que partiamos. 
+ 
+  \begin{table}[H]	
+  \caption{Resultados del \textit{Algoritmo de iones mejorado v2 + CMAES}}
+  \centering
+  \begin{tabular}{|l|l|l|}
+  \hline
+  & \textbf{D=10, IMO mejorado} & \textbf{D=30, IMO mejorado} \\ \hline
+  f1 &  0.000000 &  4355.835454 \\ \hline
+  f2 &  0.000000 &  0.000000 \\ \hline
+  f3 &  0.000000 &  0.000001 \\ \hline
+  f4 &  0.318926 &  7.516527 \\ \hline
+  f5 &  20.384630 &  20.871326 \\ \hline
+  f6 &  0.997974 &  5.864659 \\ \hline
+  f7 &  0.008965 &  0.001972 \\ \hline
+  f8 &  13.889611 &  48.354929 \\ \hline
+  f9 &  12.854858 &  54.205256 \\ \hline
+  f10 &  853.542288 &  3346.864204 \\ \hline
+  f11 &  968.525040 &  3145.585325 \\ \hline
+  f12 &  0.399067 &  1.402973 \\ \hline
+  f13 &  0.114891 &  0.247605 \\ \hline
+  f14 &  0.454001 &  0.434418 \\ \hline
+  f15 &  1.161012 &  4.006343 \\ \hline
+  f16 &  3.920165 &  13.300889 \\ \hline
+  f17 &  591.667610 &  1780.139778 \\ \hline
+  f18 &  62.436072 &  348.075348 \\ \hline
+  f19 &  3.017356 &  14.741923 \\ \hline
+  f20 &  68.095386 &  458.587897 \\ \hline
+  \end{tabular}
+  \end{table}
+  
+  Nos replanteamos si con este nuevo equilibrio diversidad-convergencia podemos mejorar los resultados de la versión de los autores.
+  Efectivamete, nos encontramos que con $D\cdot 1000$ evaluaciones de esta función, los resultados que obtenemos son satisfactoriamente
+  mejores:
+  
+  \begin{table}[H]	
+  \caption{Resultados del \textit{Algoritmo de iones mejorado v2 + CMAES}}
+  \centering
+  \begin{tabular}{|l|l|l|}
+  \hline
+  & \textbf{D=10, IMO mejorado} & \textbf{D=30, IMO mejorado} \\ \hline
+  f1 &  0.000000 &  153.994848 \\ \hline
+  f2 &  0.000000 &  0.000000 \\ \hline
+  f3 &  0.000000 &  0.000000 \\ \hline
+  f4 &  0.000000 &  0.147572 \\ \hline
+  f5 &  20.001247 &  20.622110 \\ \hline
+  f6 &  0.000002 &  0.357917 \\ \hline
+  f7 &  0.000000 &  0.000000 \\ \hline
+  f8 &  4.576812 &  27.580246 \\ \hline
+  f9 &  4.576811 &  27.699639 \\ \hline
+  f10 &  283.681734 &  1693.500771 \\ \hline
+  f11 &  299.088276 &  2233.018358 \\ \hline
+  f12 &  0.029925 &  0.019306 \\ \hline
+  f13 &  0.044096 &  0.169150 \\ \hline
+  f14 &  0.275749 &  0.281541 \\ \hline
+  f15 &  0.566455 &  2.281242 \\ \hline
+  f16 &  3.267757 &  13.005128 \\ \hline
+  f17 &  252.999183 &  1340.708149 \\ \hline
+  f18 &  44.665859 &  286.135882 \\ \hline
+  f19 &  1.593592 &  11.621429 \\ \hline
+  f20 &  49.247290 &  505.252065 \\ \hline
+  \end{tabular}
+  \end{table}
+  
+  
 \end{itemize}
 
 
@@ -648,5 +745,71 @@ Si se ha modificado algún parámetro, habrá que hacer:
 
 \section{Conclusiones aprendidas}
 
+\section{Anexo: Resultados para comparar}
 
+  \begin{table}[H]	
+  \caption{Resultados del \textit{Resultados de Differential Evolution}}
+  \centering
+  \begin{tabular}{|l|r|r|r|r|}
+  \hline
+     & \textbf{D=10, DEBin} & \textbf{D=10, DExp} & \textbf{D=30, DEBin} & \textbf{D=30, DExp}\\ \hline
+  f1 & 0.00E+00 & 0.00E+00 & 8.88E+04 & 2.95E+05 \\ \hline
+  f2 & 0.00E+00 & 0.00E+00 & 2.00E+02 & 2.00E+02 \\ \hline
+  f3 & 0.00E+00 & 0.00E+00 & 3.00E+02 & 3.00E+02 \\ \hline
+  f4 & 2.16E+01 & 2.19E+01 & 3.85E+02 & 4.11E+02 \\ \hline
+  f5 & 2.02E+01 & 2.01E+01 & 5.01E+02 & 5.00E+02 \\ \hline
+  f6 & 5.84E-01 & 1.84E-01 & 6.03E+02 & 6.17E+02 \\ \hline
+  f7 & 3.66E-02 & 3.58E-02 & 7.00E+02 & 7.00E+02 \\ \hline
+  f8 & 4.35E+00 & 3.98E-02 & 8.10E+02 & 8.00E+02 \\ \hline
+  f9 & 1.20E+01 & 8.79E+00 & 1.02E+03 & 9.73E+02 \\ \hline
+  f10 & 5.20E+01 & 1.15E+01 & 1.43E+03 & 9.93E+02 \\ \hline
+  f11 & 4.44E+02 & 5.55E+02 & 6.76E+03 & 4.31E+03 \\ \hline
+  f12 & 4.26E-01 & 4.39E-01 & 1.20E+03 & 1.20E+03 \\ \hline
+  f13 & 1.14E-01 & 1.12E-01 & 1.30E+03 & 1.30E+03 \\ \hline
+  f14 & 1.76E-01 & 1.63E-01 & 1.40E+03 & 1.40E+03 \\ \hline
+  f15 & 1.77E+00 & 1.24E+00 & 1.51E+03 & 1.51E+03 \\ \hline
+  f16 & 2.34E+00 & 2.35E+00 & 1.61E+03 & 1.61E+03 \\ \hline
+  f17 & 1.64E+01 & 8.49E+00 & 4.95E+03 & 3.93E+03 \\ \hline
+  f18 & 5.40E-01 & 5.54E-01 & 1.82E+03 & 1.84E+03 \\ \hline
+  f19 & 3.11E-01 & 4.53E-01 & 1.90E+03 & 1.91E+03 \\ \hline
+  f20 & 2.04E-01 & 6.60E-02 & 2.01E+03 & 2.03E+03 \\ \hline
+  \end{tabular}
+  \label{difev}
+  \end{table}
+
+  donde \textbf{DEBin} es un \textit{differential evolution} con operador de mutación \texttt{rand/1/bin}; y
+  \textbf{DExp} es un \textit{differential evolution} con operador de mutación \texttt{rand/1/exp}
+  
+  \begin{table}[H]
+  \caption{Resultados de CEC2014}
+   \begin{adjustbox}{width=1.15\textwidth}
+  \centering
+  \begin{tabular}{|c|r|r|r|r|r|r|r|r|r|r|}
+  \hline
+  \multicolumn{1}{|l|}{} & \multicolumn{1}{c|}{\textbf{CoDE}} & \multicolumn{1}{c|}{\textbf{D-SHADE}} & \multicolumn{1}{c|}{\textbf{EPSDE}} & \multicolumn{1}{c|}{\textbf{JADE}} & \multicolumn{1}{c|}{\textbf{L-SHADE}} & \multicolumn{1}{c|}{\textbf{NBIPOP-aCMA-ES}} & \multicolumn{1}{c|}{\textbf{SHADE11}} & \multicolumn{1}{c|}{\textbf{SaDE}} & \multicolumn{1}{c|}{\textbf{dynNP-jDE}} & \multicolumn{1}{c|}{\textbf{iCMAES-ILS}} \\ \hline
+  \textbf{f1} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 2.5523185874 & 2.16932408E-007 & 0 \\ \hline
+  \textbf{f2} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
+  \textbf{f3} & 0 & 0 & 0 & 0.0061659368 & 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
+  \textbf{f4} & 10.4826142934 & 30.7734858177 & 0 & 27.6186789086 & 29.4095534696 & 2.8198864768 & 29.4945614566 & 18.0850398784 & 3.3229206052 & 14.3852921475 \\ \hline
+  \textbf{f5} & 18.4489901182 & 17.7268744007 & 20.0499565405 & 17.2676724191 & 14.1455983633 & 18.0702454036 & 18.0061827299 & 15.7840675315 & 15.9500415847 & 14.6543978013 \\ \hline
+  \textbf{f6} & 1.652545E-006 & 0 & 3.0415621869 & 0.1755220197 & 0.0175400641 & 0.3305270985 & 0 & 0 & 0 & 0 \\ \hline
+  \textbf{f7} & 0.0375906649 & 0.0053139273 & 0.0175738115 & 0.0118615958 & 0.0030429237 & 0 & 0.0097818861 & 0.0072428745 & 0.0049691893 & 0 \\ \hline
+  \textbf{f8} & 0 & 0 & 0 & 0 & 0 & 3.6972501813 & 0 & 0 & 0 & 0.2536577111 \\ \hline
+  \textbf{f9} & 3.8822907289 & 3.0826834295 & 3.6887332129 & 3.5070887497 & 2.344597678 & 0.326222014 & 3.1407481567 & 3.5837731043 & 3.8578530972 & 0.0975487633 \\ \hline
+  \textbf{f10} & 0.0355133096 & 0.0489838753 & 0.0440854878 & 0.0061229844 & 0.0085721782 & 91.6179225313 & 0.0122459688 & 0.0195935501 & 0.0024491938 & 122.0401124998 \\ \hline
+  \textbf{f11} & 75.97028827 & 54.9344512263 & 323.1316686571 & 83.6964918713 & 32.055826349 & 116.8327825644 & 63.1801993237 & 196.4226016765 & 136.2141998624 & 8.5850809801 \\ \hline
+  \textbf{f12} & 0.0433839876 & 0.0529084306 & 0.3210496968 & 0.2501378312 & 0.0681671385 & 0.0100833433 & 0.1364084116 & 0.4350190349 & 0.3111217612 & 0.0650093797 \\ \hline
+  \textbf{f13} & 0.0797987518 & 0.0489190311 & 0.1223680668 & 0.0839677932 & 0.0515619667 & 0.010894762 & 0.073996527 & 0.1252053565 & 0.1189658945 & 0.0091148563 \\ \hline
+  \textbf{f14} & 0.1071541378 & 0.0900969438 & 0.1363222239 & 0.1105412155 & 0.081361704 & 0.2824303933 & 0.1055165522 & 0.1857701461 & 0.1352218727 & 0.1545591085 \\ \hline
+  \textbf{f15} & 0.6523180198 & 0.4027667033 & 0.7538668012 & 0.5782542708 & 0.3660991591 & 0.5467188825 & 0.5051689656 & 0.7903287228 & 0.7815061018 & 0.7233311235 \\ \hline
+  \textbf{f16} & 1.1291916406 & 1.3390288512 & 2.5412985701 & 1.6508403475 & 1.2407967834 & 2.5295163003 & 1.5571401888 & 1.9669671832 & 1.5944840344 & 1.9070502497 \\ \hline
+  \textbf{f17} & 2.6621315275 & 3.3813450543 & 53.2895801695 & 30.9109611068 & 0.9766637611 & 38.8964541152 & 1.5576914381 & 28.3335977004 & 2.622821365 & 21.0348886039 \\ \hline
+  \textbf{f18} & 0.430562228 & 0.4749765157 & 1.1971258083 & 0.238780539 & 0.2440927767 & 3.5766693718 & 0.2369542912 & 1.6451056175 & 0.4409595631 & 0.5259199747 \\ \hline
+  \textbf{f19} & 0.0744713059 & 0.2050414984 & 1.4319443123 & 0.2549178006 & 0.0773000324 & 0.8276950139 & 0.1916908903 & 0.0668896409 & 0.1218315053 & 0.7076957291 \\ \hline
+  \textbf{f20} & 0.0239118917 & 0.2733571191 & 0.1650332637 & 0.3240730933 & 0.1848826079 & 1.3167908894 & 0.2433489516 & 0.1076009171 & 0.0414788094 & 0.8040941367 \\ \hline
+  \end{tabular}
+  \end{adjustbox}
+  \label{allresults}
+  \end{table}
+  
 \end{document}

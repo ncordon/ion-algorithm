@@ -22,33 +22,35 @@ extern double *OShift,*M,*y,*z,*x_bound;
 extern int ini_flag,n_flag,func_flag,*SS;
 
 
-// Generador aleatorio
+/// Random generator
 extern Random myrandom;
 
 
-// Dimensión en la que estamos trabajando
+/// Dimension we are working at
 extern int dimension;
-// Número de función que se ejecutará
+/// Function to benchmark
 extern int func_num;
-// Número máximo de evaluaciones
+/// Maximum evaluation number
 extern int max_eval;
-// Tamaño de la población de iones
+/// Size of ions population
 extern int population_size;
-// Probabilidad de reinicio de soluciones
+/// Solutions restart probability
 extern double prob_restart;
-// Probabilidad de mutación de soluciones
+/// Solutions mutations probability
 extern double prob_mutation;
-// Radio de bolas que se considerarán en búsqueda local (applyLocalSearch)
+/// Radius of sets in which we apply local search.
 extern double epsilon;
-// Límites inferior y superior del espacio de búsqueda
+/// Lower bound of [lbound,ubound]^D search space
 extern int lbound;
+/// Upper bound of [lbound,ubound]^D search space
 extern int ubound;
-// Número de ejecuciones para cada función
+/// Number of executions the algorithm with a given function
 extern int num_ejecuciones;
+/// 10 and 30, dimensions to benchmark
 extern int dimensiones[2];
-// Tipo de búsqueda local a considerar
+/// Type of local search to apply
 extern string type_ls;
-// Función de fitness
+/// Fitness function
 extern double fitness(vector<double> x);
 
 #endif
