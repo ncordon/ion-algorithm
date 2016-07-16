@@ -18,6 +18,5 @@ applyLocalSearch(best_solution){
         else{
             current = best_solution
         }
-        i++;
     }
 }

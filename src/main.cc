@@ -24,19 +24,15 @@ int main(){
 
 		for(int f_num=1; f_num <= 20; f_num++){
 			func_num = f_num;
-			if(f_num!=6){
 			cout << "f" << f_num << ", ";
 			suma = 0;
 
 			for (int i=0; i < num_ejecuciones; i++){
-				current_result =  fitness(ionAlgorithm_v2()) - (func_num*100);
-				//cout << current_result << endl;
+				current_result =  fitness(ionAlgorithm()) - (func_num*100);
 				suma += current_result;
 			}
 
 			cout << suma/num_ejecuciones << endl;
-			//total_sum += suma/num_ejecuciones;
-}
 		}
 	}
 

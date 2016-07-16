@@ -167,27 +167,27 @@ void updateLocations(vector<Solution> &anions, vector<Solution> cations){
 
 
     for(unsigned int i = 0; i < anions.size(); i++){
-        /*
+
         for(unsigned int j = 0; j < anions.size(); j++){
-            factor = (1-(1.0/(1 + exp( (anions[j].getFitness() -
-                    anions[i].getFitness())/anions[i].getFitness() ))))/2;
+            factor = (1.0/(1 + exp( anions[i].getFitness() -
+                    anions[j].getFitness()) ))/2;
 
             if (j!=i){
                 for(unsigned int k = 0; k < dimension; k++){
-                    force = myrandom.randreal(0,1)*factor;// * (1.0/(1 + exp(-0.1/abs(anions[i][k] - anions[j][k]))));
+                    force = myrandom.randreal(0,1)*factor;//
                     // Repulsión
                     v_anions[i][k] += force*(anions[i][k] - anions[j][k]);
                 }
             }
-        }*/
+        }
 
         for(unsigned int j = 0; j < cations.size(); j++){
-            factor = (1.0/(1 + exp( (cations[j].getFitness() -
-                    anions[i].getFitness())/anions[i].getFitness() )))/2;
+            factor = (1.0/(1 + exp( cations[j].getFitness() -
+                    anions[i].getFitness()) ))/2;
 
             for(unsigned int k = 0; k < dimension; k++){
-                force = myrandom.randreal(0,1)*factor;// * (1.0/(1 + exp(-0.1/abs(anions[i][k] - cations[j][k]))));
-                // Repulsión
+                force = myrandom.randreal(0,1)*factor;//
+                // Atracción
                 v_anions[i][k] += force*(cations[j][k] - anions[i][k]);
             }
         }
@@ -256,8 +256,7 @@ vector<double> ionAlgorithm_v2(){
         if (liquid_phase){
             vector<Solution> anions_aux(anions);
             updateLocations(anions, cations);
-            //updateLocations(cations, anions_aux, delta);
-            updateLocations(cations, anions);
+            updateLocations(cations, anions_aux);
             vector<Solution> cations_aux(anions);
             anions = cations;
             cations = cations_aux;
@@ -286,7 +285,6 @@ vector<double> ionAlgorithm_v2(){
         }
         // Fase sólida
         else{
-            //applyLocalSearch(best_solution, eval, dimension*10);
             if (best_updated){
                 applyRealeaLS(best_solution, eval, dimension*1000);
                 best_cations.push_back(best_solution);
@@ -384,5 +382,4 @@ void applyLocalSearch(Solution &solution, int &eval, int evals_ls){
         eval++;
         i++;
     }
-
 }

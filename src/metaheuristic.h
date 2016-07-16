@@ -90,6 +90,7 @@ vector<double> ionAlgorithm_v2();
  * Updates the best solution found until the moment
  * @param best solution
  * @param ref posible new best solution
+ * @return true if best solution has been updated
  */
 bool updateBestSolution(Solution &best_solution, Solution ref);
 

@@ -275,7 +275,8 @@ operadores, van convergiendo a una posible solución del problema. Este tipo de 
 Al respecto del algoritmo que hemos escogido, el \textit{algoritmo de iones} (IMO) sólo existe un trabajo publicado por Behzad Javidy, 
 Abdolreza Hatamlou y Seyedali Mirjalili, publicado a 19 de Marzo de 2015. Los autores tratan de modelar de forma
 simplificada el comportamiento de los iones en el espacio y lo comparan con algoritmos genéticos, con Differential Evolution,
-con PSO y con algoritmos de Colonia de Hormigas sobre 10 funciones test, obteniendo mejores medias y mejores desviaciones
+con PSO y con algoritmos de Colonia de Hormigas sobre 10 funciones test,
+ obteniendo mejores medias y mejores desviaciones
 típicas que los citados algoritmos para unos parámetros prefijados.
 
 \section{Descripción del algoritmo}
@@ -300,11 +301,11 @@ Se modelan dos fases en el movimiento de los iones:
  
  Se efectúa un procedimiento análogo con los cationes, acercándolos al mejor anión.
  
- La idea es buena, dado que si tenemos un catión (resp.anión) bueno, se modifican los aniones para que las componentes se
+ La idea es correcta, dado que si tenemos un catión (resp.anión) bueno, se modifican los aniones para que las componentes se
  empiecen a parecer a los de ese catión, con mayor grado de convergencia en las componentes más cercanas, y menor en las más
  lejanas.
  
- Además, la convergencia puntos en el espacio debería estar garantizada, puesto que la sucesión $\left\{\frac{1}{2^n}\right\}$ converge
+ Además, la convergencia a puntos en el espacio debería estar garantizada, puesto que la sucesión $\left\{\frac{1}{2^n}\right\}$ converge
  a 0, y se tiene $ \frac{1}{2} \le F_{i,j} \le 1$. Pasaremos a discutir esto en la siguiente sección.
  
  
@@ -358,10 +359,10 @@ Se modelan dos fases en el movimiento de los iones:
   
   $$\exists B(x,\delta_1), B(y, \delta_2)$$ verificándose que $$B(x,\delta_1) \bigcap B(x,\delta_2) = \emptyset $$
   
-  $f$ tiene un mínimo local en $B(x,\delta_1)$ y otro en $B(y,\delta_1)$
+  $f$ tiene un mínimo local en $B(x,\delta_1)$ y otro en $B(y,\delta_2)$
   
-  se cumple que $C_{best}\in B(x,\delta_1)$, $A_{best}\in B(x,\delta_2)$, y además $A_i\in B(x,\delta_1) \forall A_i \neq A_{best}$ 
-  y $C_i\in B(x,\delta_2) \forall C_i \neq C_{best}$, con $F_{i,j} \approx 1$. Podríamos entonces no tener convergencia
+  se cumple que $C_{best}\in B(x,\delta_1)$, $A_{best}\in B(y,\delta_2)$, y además $A_i\in B(x,\delta_1) \forall A_i \neq A_{best}$ 
+  y $C_i\in B(y,\delta_2) \forall C_i \neq C_{best}$, con $F_{i,j} \approx 1$. Podríamos entonces no tener convergencia
   nunca a un único punto, o incluso que fuese tan lenta que estuviésemos perdiendo un montón de evaluaciones con soluciones
   de \textit{fitness} similar.
   
@@ -420,7 +421,7 @@ Se modelan dos fases en el movimiento de los iones:
  A este efecto, hemos probado, para las 5 primeras funciones (debido a la falta de tiempo), los siguientes valores de tamaño
  de población de iones: $\big\{10, 20, 30, 40, 50\big\}$ y los siguientes valores de probabilidad de reinicio: $\big\{0.05, 0.1, 0.15, 0.2\big\}$
  
- obteniendo los mejores resultados con un tamaño poblacional de $50$ iones, y una probabilidad de reinicio del $0.1$, que corresponden
+ Se han obtenido los mejores resultados con un tamaño poblacional de $50$ iones, y una probabilidad de reinicio del $0.1$, que corresponden
  a los resultados presentados en el punto número 3
  
  \item \textbf{Hibridación con búsqueda local}.
@@ -439,7 +440,7 @@ Se modelan dos fases en el movimiento de los iones:
   
  Posteriormente, probamos a hibridar con \textit{SolisWets}, \textit{CMAES} y \textit{Simplex}, búsquedas locales programadas en el software Realea de Daniel Molina distribuido
  bajo licencia GPL. La estrategia para hibridar fue introducir una búsqueda local en fase sólida sobre la mejor solución
- encontrada hasta el momento. Empleamos $10\cdot D$ iteraciones en \textit{Solis Wets}, en \textit{Simplex} y en \textit{CMAES}.
+ encontrada hasta el momento. Empleamos $10\cdot D$ iteraciones en \textit{Solis Wets}, en \textit{Simplex} y $20\cdot D$ en \textit{CMAES}.
  
  
  Los resultados obtenidos, han sido:
@@ -539,6 +540,8 @@ Se modelan dos fases en el movimiento de los iones:
   
  \end{itemize}
  
+  De las hibridaciones hechas, la que mejor ha funcionado ha sido IMO+Simplex, pero se halla aún muy lejos de resultados
+  competitivos.
  \item \textbf{Modelado de fuerzas de atracción y repulsión completas}:
  
  Hemos tratado de modelar todas las fuerzas de atracción-repulsión (no tan solo las de atracción hacia
@@ -552,22 +555,22 @@ Se modelan dos fases en el movimiento de los iones:
  
  Las fuerzas de repulsión entre aniones, se modelan, para un anión $A_i$ dado como:
  
- $$F_{i,j} = \frac{1}{2} \cdot \left\{1-\frac{1}{1+e^{d_{i,j}}}\right\} \qquad \qquad d_{i,j} = {f(A_j) - f(A_i)}$$ 
+ $$F_{i,j} = \frac{1}{2} \cdot \left\{\frac{1}{1+e^{d_{i,j}}}\right\} \qquad \qquad d_{i,j} = {f(A_i) - f(A_j)}$$ 
  
- Eso implica que si dos aniones tienen \textit{fit} muy similar, apenas se producirá repulsión, mientras que si dos
- aniones tienen \textit{fit} distintos, la fuerza de repulsión será de $\frac{1}{2}$, actualizándose las componentes de $A_i$
+ Eso implica que si $A_j$ es mucho mejor que $A_i$, apenas se producirá repulsión, mientras que si $A_j$ es mucho peor que $A_i$
+ aniones tienen \textit{fit} distintos, la fuerza de repulsión será cercana a $\frac{1}{2}$, actualizándose las componentes de $A_i$
  a:
-  $$A_i = A_i + \sum_{j=1, j\neq i}^{j=|Aniones|} F_{i,j}\cdot (A_i - A_j)_{i=1\ldots D}$$
+  $$A_i = A_i + \sum_{j=1, j\neq i}^{j=|Aniones|} rand(0,1)\cdot F_{i,j}\cdot (A_i - A_j)_{i=1\ldots D}$$
   
  Las fuerzas de atracción de los aniones al anión dado $A_i$ se modelan como:
  
- $$F_{i,j} = \frac{1}{2} \cdot \left\{1-\frac{1}{1+e^{d_{i,j}}}\right\} \qquad \qquad d_{i,j} = {f(C_j) - f(A_i)}$$ 
+ $$F_{i,j} = \frac{1}{2} \cdot \left\{\frac{1}{1+e^{d_{i,j}}}\right\} \qquad \qquad d_{i,j} = {f(C_j) - f(A_i)}$$ 
 
  De esta forma, la fuerza de atracción es muy alta cuando el catión tiene un \textit{fit} mucho mejor(menor) que el anión, y
- es más pequeña conforme el anión tenga un \textit{fit} mucho más alto que el catión.
+ es más pequeña conforme el catión tenga un \textit{fit} mucho más alto que el anión.
  y se actualiza $A_i$ como sigue:
  
- $$A_i = A_i + \sum_{j=1}^{j=|Cationes|} F_{i,j}\cdot (C_j - A_i)_{i=1\ldots D}$$
+ $$A_i = A_i + \sum_{j=1}^{j=|Cationes|} rand(0,1)\cdot F_{i,j}\cdot (C_j - A_i)_{i=1\ldots D}$$
  
  Esta funcionalidad se ha implementado en:
  
@@ -616,7 +619,7 @@ Se modelan dos fases en el movimiento de los iones:
   \end{table}
  
  
- Como podemos observar, hemos conseguido mejorar mucho los resultados más malos de la anterior versión del algoritmo, pero
+ Como podemos observar, hemos conseguido mejorar mucho los resultados más negativos de la anterior versión del algoritmo, pero
  en contraposición, hemos empeorado un poco los mejores resultados.
  
  \item Algoritmo mejorado v2 + Búsqueda local con nuevo equilibrio diversidad-convergencia
@@ -631,7 +634,7 @@ Se modelan dos fases en el movimiento de los iones:
   \item Presencia sólo de fuerzas atractivas, no repulsivas. Las fuerzas de atracción son las descritas en la variación anterior.
   Para aniones: 
   
-     $$F_{i,j} = \frac{1}{2} \cdot \left\{1-\frac{1}{1+e^{d_{i,j}}}\right\} \qquad \qquad d_{i,j} = {f(C_j) - f(A_i)}$$ 
+     $$F_{i,j} = \frac{1}{2} \cdot \left\{\frac{1}{1+e^{d_{i,j}}}\right\} \qquad \qquad d_{i,j} = {f(C_j) - f(A_i)}$$ 
      
   Para cationes, análogo.
   
@@ -640,7 +643,7 @@ Se modelan dos fases en el movimiento de los iones:
   de los aniones y el de los cationes.
   
   \item La fase líquida se para tras un tope de evaluaciones. Hemos seleccionado 1000 evaluaciones como tope, que parece
-  estar dando buenos resultados.
+  estar dando buenos resultados, tras probar otros valores.
  \end{itemize}
  
   Obtenemos unos resultados sorprendentemente buenos, en comparación a los resultados del
@@ -673,6 +676,7 @@ Se modelan dos fases en el movimiento de los iones:
   f19 &  3.017356 &  14.741923 \\ \hline
   f20 &  68.095386 &  458.587897 \\ \hline
   \end{tabular}
+  \label{mejv2}
   \end{table}
   
   Nos replanteamos si con este nuevo equilibrio diversidad-convergencia podemos mejorar los resultados de la versión de los autores.
@@ -708,6 +712,7 @@ Se modelan dos fases en el movimiento de los iones:
   \end{tabular}
   \end{table}
   
+  Estos constituyen los mejores resultados que hemos obtenido con el algoritmo.
   
 \end{itemize}
 
@@ -740,6 +745,11 @@ Si se ha modificado algún parámetro, habrá que hacer:
     make
     ./main
 \end{verbatim}
+
+El \texttt{./main} está configurado para obtener los resultados con el mejor algoritmo que hemos encontrado hasta el momento,
+la versión de los autores hibridada con CMAES a $1000\cdot D$ evaluaciones en fase sólida.
+
+Si cambiamos en \texttt{main} \texttt{ionAlgorithm()} por \texttt{ionAlgorithm\_v2()} obtendremos los resultados de \ref{mejv2}
 
 
 

@@ -16,3 +16,6 @@ def redistribute (ions, list_bests){
         }
     }
 }
+
+redistribute(anions, best_cations)
+redistribute(cations, best_anions)
