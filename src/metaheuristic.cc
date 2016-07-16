@@ -66,14 +66,14 @@ void redistribute(vector<Solution> &ions, Solution ref, Solution ref_old){
         if (myrandom.randreal(0,1) > 0.5)
             for (unsigned int j = 0; j < ions[i].size(); j++){
                 ions[i][j] = ions[i][j] + phi * ref_old[j];
-                if(myrandom.randreal(0,1) < prob_mutation)
-                    ions[i][j] = myrandom.randreal(lbound, ubound);
+                //if(myrandom.randreal(0,1) < prob_mutation)
+                //    ions[i][j] = myrandom.randreal(lbound, ubound);
             }
         else
             for (unsigned int j = 0; j < ions[i].size(); j++){
                 ions[i][j] = ions[i][j] + phi * ref[j];
-                if(myrandom.randreal(0,1) < prob_mutation)
-                    ions[i][j] = myrandom.randreal(lbound, ubound);
+                //if(myrandom.randreal(0,1) < prob_mutation)
+                //    ions[i][j] = myrandom.randreal(lbound, ubound);
             }
         if(myrandom.randreal(0,1) < prob_restart){
             for (unsigned int j = 0; j < ions[i].size(); j++)

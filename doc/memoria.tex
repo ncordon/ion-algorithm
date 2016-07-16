@@ -650,11 +650,11 @@ Se modelan dos fases en el movimiento de los iones:
  algoritmo de iones desde los que partiamos. 
  
   \begin{table}[H]	
-  \caption{Resultados del \textit{Algoritmo de iones mejorado v2 + CMAES}}
+  \caption{Resultados del \textit{Algoritmo de iones mejorado v2 + CMAES intensificado}}
   \centering
   \begin{tabular}{|l|l|l|}
   \hline
-  & \textbf{D=10, IMO mejorado} & \textbf{D=30, IMO mejorado} \\ \hline
+  & \textbf{D=10} & \textbf{D=30} \\ \hline
   f1 &  0.000000 &  4355.835454 \\ \hline
   f2 &  0.000000 &  0.000000 \\ \hline
   f3 &  0.000000 &  0.000001 \\ \hline
@@ -684,7 +684,7 @@ Se modelan dos fases en el movimiento de los iones:
   mejores:
   
   \begin{table}[H]	
-  \caption{Resultados del \textit{Algoritmo de iones original + CMAES}}
+  \caption{Resultados del \textit{Algoritmo de iones original + CMAES intensificado}}
   \centering
   \begin{tabular}{|l|l|l|}
   \hline
@@ -802,6 +802,16 @@ Si cambiamos en \texttt{main} \texttt{ionAlgorithm()} por \texttt{ionAlgorithm\_
 
 \section{Conclusiones}
 
+Ha resultado extremadamente duro hacer de una metaheurística que hemos tenido que rehacer desde la expuesta
+por sus autores, debido a las imprecisiones imperantes en su paper, algo competitivo con DE.
+
+Sobretodo hay que destacar que una buena búsqueda local, aunque tengamos un algoritmo paupérrimo en resultados, puede
+hacer que con el adecuado equilibrio (el cual hemos hallado casi al final, porque inicialmente no lo afinamos lo suficiente),
+produzca la convergencia deseada a buenas soluciones del espacio de búsqueda.
+
+Asimismo, podemos afirmar que a pesar de los intentos por mejorar la diversidad del algoritmo, no hemos sido capaces de
+hacerlo, pero todo el proceso seguido nos ha conducido a encontrar las soluciones que al final presentamos, y que
+resultan bastante competitivas con DE y en algunos casos con CEC2014.
 
 \section{Anexo: Resultados para comparar}
 
