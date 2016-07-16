@@ -10,6 +10,7 @@ using namespace std;
 
 int main(){
 	double suma;
+	double current_result;
 
 	// Fijamos la precisión de impresión
 	std::cout << std::fixed;
@@ -21,14 +22,16 @@ int main(){
 		max_eval = 10000 * dimension;
 		cout << "Dimensión: " << dimension << endl;
 
-		for(int f_num=20; f_num <= 20; f_num++){
+		for(int f_num=1; f_num <= 20; f_num++){
 			func_num = f_num;
 
 			cout << "f" << f_num << ", ";
 			suma = 0;
 
 			for (int i=0; i < num_ejecuciones; i++){
-				suma += (fitness(ion_algorithm()) - (func_num*100));
+				current_result =  fitness(ionAlgorithm_v2()) - (func_num*100);
+				//cout << current_result << endl;
+				suma += current_result;
 			}
 
 			cout << suma/num_ejecuciones << endl;

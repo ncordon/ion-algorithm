@@ -96,7 +96,7 @@ bool updateBestSolution(Solution &best_solution, Solution ref){
 }
 
 
-vector<double> ion_algorithm(){
+vector<double> ionAlgorithm(){
     vector<Solution> cations(population_size/2);
     vector<Solution> anions(population_size/2);
     Solution best_solution(vector<double>(dimension), numeric_limits<double>::infinity());
@@ -161,12 +161,13 @@ vector<double> ion_algorithm(){
 
 
 
-void updateLocations(vector<Solution> &anions, vector<Solution> cations){
+void updateLocations(vector<Solution> &anions, vector<Solution> cations, double delta){
     vector<vector <double>> v_anions(anions.size(), vector<double>(dimension,0));
     double factor, force;
 
 
     for(unsigned int i = 0; i < anions.size(); i++){
+        /*
         for(unsigned int j = 0; j < anions.size(); j++){
             factor = (1-(1.0/(1 + exp( (anions[j].getFitness() -
                     anions[i].getFitness())/anions[i].getFitness() ))))/2;
@@ -178,14 +179,14 @@ void updateLocations(vector<Solution> &anions, vector<Solution> cations){
                     v_anions[i][k] += force*(anions[i][k] - anions[j][k]);
                 }
             }
-        }
+        }*/
 
         for(unsigned int j = 0; j < cations.size(); j++){
             factor = (1.0/(1 + exp( (cations[j].getFitness() -
-                    anions[i].getFitness())/anions[i].getFitness() )))/2;
+                    anions[i].getFitness())/anions[i].getFitness() )));///2;
 
             for(unsigned int k = 0; k < dimension; k++){
-                force = myrandom.randreal(0,1)*factor;// * (1.0/(1 + exp(-0.1/abs(anions[i][k] - cations[j][k]))));
+                force = myrandom.randreal(0,delta)*factor;// * (1.0/(1 + exp(-0.1/abs(anions[i][k] - cations[j][k]))));
                 // Repulsión
                 v_anions[i][k] += force*(cations[j][k] - anions[i][k]);
             }
@@ -227,7 +228,7 @@ void redistribute(vector<Solution> &ions, vector<Solution> &bests){
 }
 
 
-vector<double> ion_algorithm_v2(){
+vector<double> ionAlgorithm_v2(){
     vector<Solution> cations(population_size/2);
     vector<Solution> anions(population_size/2);
     Solution best_solution(vector<double>(dimension), numeric_limits<double>::infinity());
@@ -238,6 +239,10 @@ vector<double> ion_algorithm_v2(){
     bool liquid_phase = true;
     bool best_achieved = false;
     bool best_updated = false;
+    double delta = 1;
+    int not_mejora = 0;
+    int tope_not_mejora = 10;
+    int tope_eval = 100 * dimension;
 
     // Inicialización
     initialize(cations);
@@ -250,8 +255,13 @@ vector<double> ion_algorithm_v2(){
         // Fase líquida
         if (liquid_phase){
             vector<Solution> anions_aux(anions);
-            updateLocations(anions, cations);
-            updateLocations(cations, anions_aux);
+            updateLocations(anions, cations, 0.5);
+            //updateLocations(cations, anions_aux, delta);
+            updateLocations(cations, anions, 0.5);
+            vector<Solution> cations_aux(anions);
+            anions = cations;
+            cations = cations_aux;
+
             // Actualización de los mejores valores
             updateFitness(cations, eval);
             updateFitness(anions, eval);
@@ -261,29 +271,46 @@ vector<double> ion_algorithm_v2(){
             best_cations.push_back(best_cation);
             best_anions.push_back(best_anion);
 
-            best_updated = (updateBestSolution(best_solution, best_cation) ||
-                            updateBestSolution(best_solution, best_anion));
+            best_updated = (updateBestSolution(best_solution, best_cation)||
+                            updateBestSolution(best_solution, best_anion) ||
+                            best_updated);
 
             // Salimos de la fase liquida, entramos en la sólida
+            /*
             if (!best_updated){
-                liquid_phase = false;
-                best_updated = false;
+                not_mejora++;
+                delta*=2.0;
+            }
+            else{
+                not_mejora = 0;
+                delta/=2.0;
             }
 
+            if (not_mejora == tope_not_mejora){
+                liquid_phase = false;
+                not_mejora=0;
+                tope_not_mejora/=2;
+            }*/
+
+            if (eval%tope_eval == 0){
+                liquid_phase = false;
+                //not_mejora=0;
+            }
             if (best_solution.getFitness()==0)
                 best_achieved = true;
         }
         // Fase sólida
         else{
             //applyLocalSearch(best_solution, eval, dimension*10);
-            applyRealeaLS(best_solution, eval, dimension*10);
-
-            best_cations.push_back(best_solution);
-            best_anions.push_back(best_solution);
-            redistribute(anions, best_cations);
-            redistribute(cations, best_anions);
-
+            if (best_updated){
+                applyRealeaLS(best_solution, eval, dimension*1000);
+                best_cations.push_back(best_solution);
+                best_anions.push_back(best_solution);
+            }
+            redistribute(anions, best_anions);
+            redistribute(cations, best_cations);
             // Entramos en la siguiente iteración en fase líquida
+            best_updated = false;
             liquid_phase = true;
         }
     }
@@ -331,7 +358,7 @@ void applyRealeaLS(Solution &solution, int &eval, int evals_ls){
     ls_options = ls -> getInitOptions(sol);
 
     // Apply the local search
-    tFitness fitness = problem->eval(sol);
+    tFitness fitness = solution.getFitness();
     unsigned evals = ls->apply(ls_options, sol, fitness, evals_ls);
 
     eval += evals;

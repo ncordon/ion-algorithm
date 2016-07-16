@@ -18,6 +18,7 @@
  */
 
 #include "cmaeshan.h"
+#include <cmath>
 #include <algorithm>
 #include <cassert>
 #include <cstdio>
@@ -54,12 +55,64 @@ static void getRange(DomainRealPtr domain, vector<tGen> *range) {
 
 void CMAESHansen::searchRange(double factor) {
 	assert(factor > 0 && factor <= 1);
+	m_rfactor = factor;
 }
+
+void CMAESHansen::searchNeighborhood(double factor, vector<tChromosomeReal> *pop) {
+	assert(factor > 0 && factor <= 1);
+	m_nfactor = factor;
+	m_pop = pop;
+}
+
+
+void min_vector_distance_sol(const tChromosomeReal &x, const tChromosomeReal &y, vector<tGen> &mindist) {
+    double dist = 0;
+    unsigned size = x.size();
+    assert(x.size() == y.size());
+
+    for (unsigned i = 0; i < size; i++) {
+	dist = fabs(x[i]-y[i]);
+	
+	if (dist < mindist[i] && dist > 0) {
+	   mindist[i] = dist;
+	}
+    }
+
+}
+
+void min_vector_distance_pop(const tChromosomeReal &x, vector<tChromosomeReal> &pop, vector<tGen> &mindist) {
+   tChromosomeReal ind;
+   int dim = x.size();
+   unsigned i, initial;
+
+    if (pop.size() == 0) {
+       throw new string("dist:Error, popsize is zero");
+    }
+
+    initial = 0;
+    ind = pop[initial];
+
+    if (ind == x) {
+	initial += 1;
+	ind = pop[initial];
+    }
+
+    for (unsigned i = 0; i < dim; i++) {
+	mindist[i] = fabs(x[i]-ind[i]);
+    }
+
+   for (i = initial+1; i < pop.size(); i++) {
+        ind = pop[i];
+	min_vector_distance_sol(x, ind, mindist);
+   }
+
+}
+
 
 ILSParameters *CMAESHansen::getInitOptions(tChromosomeReal &sol) {
     int i, dim = sol.size();
     CMAESHansenParams *param;
-    DistVector dist(dim);
+    vector<tGen> dist(dim);
 
    param = new CMAESHansenParams(dim);
 
@@ -67,19 +120,31 @@ ILSParameters *CMAESHansen::getInitOptions(tChromosomeReal &sol) {
       param->xinit[i] = sol[i];
    }
 
-   if (true) {
+    if (m_nfactor) {
+	if (m_pop == NULL) {
+	   delete param;
+	   throw string("CMAESHansen::Population is null");
+	}
+
+	min_vector_distance_pop(sol, *m_pop, dist);
+
+	for (i = 0; i < dim; i++) {
+	    param->stddev[i] = dist[i]*m_nfactor+0.001;
+	}
+
+   }
+   else if (m_rfactor) {
 	DomainRealPtr domain = m_problem->getDomain();
 	vector<tGen> range(dim);
 	getRange(domain, &range);
 
 	for (i = 0; i < dim; i++) {
-	    param->stddev[i] = range[i]*m_rfactor+0.01;
+	    param->stddev[i] = range[i]*m_rfactor;
 	}
    }
 
    return param;
 }
-    
 
 unsigned CMAESHansen::apply(ILSParameters *opt, tChromosomeReal &sol, tFitness &fitness, unsigned itera) {
    CMAESHansenParams *params = (CMAESHansenParams *) opt;

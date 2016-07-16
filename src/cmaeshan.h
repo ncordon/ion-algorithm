@@ -53,19 +53,21 @@ class CMAESHansen : public ILocalSearch {
 	 *
 	 * @param factor ratio of search
 	 */
-	void searchRange(double factor);
+        void searchRange(double factor);
 	/**
-	 * Search in the population neighbood
+	 * Search in the population neighborhood
 	 *
 	 * @param factor ratio of search
+	 * @param pop population ratio
 	 */
-	void searchNeighborhood(double ratio);
+        void searchNeighborhood(double ratio, vector<tChromosomeReal> *pop);
 	unsigned apply(ILSParameters *opt, tChromosomeReal &sol, tFitness &fitness, unsigned itera);
 	ILSParameters *getInitOptions(tChromosomeReal &sol);
 
     private:
 	double m_rfactor;
 	double m_nfactor;
+	vector<tChromosomeReal> *m_pop;
 	string m_fconfig;
 	bool m_debug;
 };

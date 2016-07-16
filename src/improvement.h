@@ -1,5 +1,5 @@
-#ifndef __METAHEURISTIC_H__
-#define __METAHEURISTIC_H__
+#ifndef __IMPROVEMENT_H__
+#define __IMPROVEMENT_H__
 
 
 #include <algorithm>
@@ -23,18 +23,10 @@ void initialize(vector<Solution> &ions);
 
 void redistribute(vector<Solution> &ions, Solution ref);
 
-void redistribute(vector<Solution> &ions, vector<Solution> &bests, double delta);
-
-vector<double> ionAlgorithm();
-
-vector<double> ionAlgorithm_v2();
+vector<double> ion_algorithm();
 
 bool updateBestSolution(Solution &best_solution, Solution ref);
 
 void applyRealeaLS(Solution &solution, int &eval, int evals_ls);
-
-void applyLocalSearch(Solution &solution, int &eval, int evals_ls);
-
-double computeNorm(vector<double> v);
 
 #endif

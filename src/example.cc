@@ -13,7 +13,7 @@ using namespace realea;
 
 void getInitRandom(Random *random, DomainRealPtr domain, tChromosomeReal &crom) {
   tReal min, max;
-    
+
   for (unsigned i = 0; i < crom.size(); ++i) {
       domain->getValues(i, &min, &max, true);
       crom[i] = random->randreal(min, max);
@@ -25,13 +25,17 @@ int main(int argc, char *argv[]) {
   int dim = 10;
   int fun = 1;
   int maxevals = 0;
+  const unsigned popsize = 5;
+  // pop is only used by cmaes using neighborhood to get the delta
+  vector<tChromosomeReal> pop;
+
   DomainRealPtr domain;
   ILocalSearch *ls;
   ILSParameters *ls_options;
   // It is a vector value
   tChromosomeReal sol(dim);
   ProblemCEC2014 cec2014(dim);
-  string type_ls="sw";
+  string type_ls="cmaes";
 
   // Init the random with the seed
   int seed=time(NULL);
@@ -39,9 +43,9 @@ int main(int argc, char *argv[]) {
 
   if (argc > 1) {
      type_ls = argv[1];
-     assert(type_ls == "sw" || type_ls == "simplex" || type_ls == "cmaes");
+     assert(type_ls == "sw" || type_ls == "simplex" || type_ls == "cmaes" || type_ls == "cmaesneigh");
   }
-	
+
   // Get the function fun for dimension dim
   ProblemPtr problem = cec2014.get(fun);
   // Domain is useful for clipping solutions
@@ -66,9 +70,21 @@ int main(int argc, char *argv[]) {
     cmaes->searchRange(0.1);
     ls = cmaes;
   }
+  else if (type_ls == "cmaesneigh") {
+    CMAESHansen *cmaes = new CMAESHansen("cmaesinit.par");
+    pop.push_back(sol);
+
+    for (int i=1; i < popsize; i++) {
+      tChromosomeReal newSol(dim);
+      getInitRandom(&random, domain, newSol);
+      pop.push_back(newSol);
+    }
+    cmaes->searchNeighborhood(0.1, &pop);
+    ls = cmaes;
+  }
 
   cout <<"Applying the '" <<type_ls <<"' LS" <<endl;
-  
+
   // The following options are common for all LS methods
   // Set the problem to allow the LS to eval solutions
   ls->setProblem(problem.get());
@@ -87,7 +103,7 @@ int main(int argc, char *argv[]) {
   tFitness before, after, diff;
 
   before = fitness;
-  
+
   // sol and fitness are updated
   unsigned evals = ls->apply(ls_options, sol, fitness, evals_ls);
   // evals should be equals to evals_ls
@@ -100,7 +116,6 @@ int main(int argc, char *argv[]) {
   diff = before-after;
   cout <<"Improvement: " <<std::scientific <<before <<" -> " <<std::scientific <<after;
   cout <<" [" <<std::scientific <<diff <<"]" <<endl;
-  
+
   return 0;
 }
-
