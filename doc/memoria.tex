@@ -412,7 +412,7 @@ Se modelan dos fases en el movimiento de los iones:
   \end{table}
 
   El algoritmo se encuentra claramente lejísimos de todas las metaheurísticas de \textit{differential evolution} [\ref{difev}], y
-  por supuesto de las de la competición de CEC2014 [\ref{allresults}].
+  por supuesto de las de la competición de CEC2014 [\ref{allresults10}, \ref{allreallresults}].
 
 \section{Propuestas de mejora del algoritmo}
 \begin{itemize}
@@ -684,35 +684,82 @@ Se modelan dos fases en el movimiento de los iones:
   mejores:
   
   \begin{table}[H]	
-  \caption{Resultados del \textit{Algoritmo de iones mejorado v2 + CMAES}}
+  \caption{Resultados del \textit{Algoritmo de iones original + CMAES}}
   \centering
   \begin{tabular}{|l|l|l|}
   \hline
-  & \textbf{D=10, IMO mejorado} & \textbf{D=30, IMO mejorado} \\ \hline
-  f1 &  0.000000 &  153.994848 \\ \hline
-  f2 &  0.000000 &  0.000000 \\ \hline
-  f3 &  0.000000 &  0.000000 \\ \hline
-  f4 &  0.000000 &  0.147572 \\ \hline
-  f5 &  20.001247 &  20.622110 \\ \hline
-  f6 &  0.000002 &  0.357917 \\ \hline
-  f7 &  0.000000 &  0.000000 \\ \hline
-  f8 &  4.576812 &  27.580246 \\ \hline
-  f9 &  4.576811 &  27.699639 \\ \hline
+  & \textbf{D=10} & \textbf{D=30} \\ \hline
+  f1 &  \textbf{0.000000} &  \textbf{153.994848} \\ \hline
+  f2 &  \textbf{0.000000} &  \textbf{0.000000} \\ \hline
+  f3 &  \textbf{0.000000} &  \textbf{0.000000} \\ \hline
+  f4 &  \textbf{0.000000} &  \textbf{0.147572} \\ \hline
+  f5 &  \textbf{20.001247} &  \textbf{20.622110} \\ \hline
+  f6 &  \textbf{0.000002} &  \textbf{0.357917} \\ \hline
+  f7 &  \textbf{0.000000} &  \textbf{0.000000} \\ \hline
+  f8 &  \textbf{4.576812} &  \textbf{27.580246} \\ \hline
+  f9 &  \textbf{4.576811} &  \textbf{27.699639} \\ \hline
   f10 &  283.681734 &  1693.500771 \\ \hline
-  f11 &  299.088276 &  2233.018358 \\ \hline
-  f12 &  0.029925 &  0.019306 \\ \hline
-  f13 &  0.044096 &  0.169150 \\ \hline
-  f14 &  0.275749 &  0.281541 \\ \hline
-  f15 &  0.566455 &  2.281242 \\ \hline
-  f16 &  3.267757 &  13.005128 \\ \hline
-  f17 &  252.999183 &  1340.708149 \\ \hline
-  f18 &  44.665859 &  286.135882 \\ \hline
-  f19 &  1.593592 &  11.621429 \\ \hline
-  f20 &  49.247290 &  505.252065 \\ \hline
+  f11 &  \textbf{299.088276} &  \textbf{2233.018358} \\ \hline
+  f12 &  \textbf{0.029925} &  \textbf{0.019306} \\ \hline
+  f13 &  \textbf{0.044096} &  \textbf{0.169150} \\ \hline
+  f14 &  0.275749 &  \textbf{0.281541} \\ \hline
+  f15 &  \textbf{0.566455} &  \textbf{2.281242} \\ \hline
+  f16 &  3.267757 &  \textbf{13.005128} \\ \hline
+  f17 &  252.999183 &  \textbf{1340.708149} \\ \hline
+  f18 &  44.665859 &  \textbf{286.135882} \\ \hline
+  f19 &  1.593592 &  \textbf{11.621429} \\ \hline
+  f20 &  49.247290 &  \textbf{505.252065} \\ \hline
   \end{tabular}
+  \label{bestres}
   \end{table}
   
   Estos constituyen los mejores resultados que hemos obtenido con el algoritmo.
+  
+  \subsection{Comparación mejores resultados}
+  Comparamos los resultados del cuadro \ref{bestres} (en negrita los valores en los que ganamos a DE).
+  \subsubsection{D=10}
+  Para las 4 primeras funciones, los resultados son óptimos.
+  
+  Para $f_5$ observamos que el valor que obtenemos, 20.001247 está dentro de la orquilla de valores de las funciones de CEC2014,
+  [\ref{allresults10}], [14-20.049], y es muy parecido al resultado que obtenemos con \textit{differential evolution} [\ref{difev}].
+  
+  Para $f_6$ los resultados son mejores que los obtenidos con \textit{differential evolution} [\ref{difev}], y obtenemos
+  mejores resultados que algunos algoritmos de la competición como EPSDE, JADE, L-SHADE o NBIPOOP-aCMA-ES.
+  
+  Para $f_7$ obtenemos el óptimo.
+  
+  Para $f_8$ y $f_9$ los resultados son peores que los de CEC2014, pero compiten con los de \textit{differential evolution}
+  
+  En $f_{10}$ obtenemos peores resultados incluso que en \textit{differential evolution}.
+  
+  En $f_{11}$ obtenemos mejor resultado que los algoritmos de DE (444 frente a 299) pero peor que los de CEC2014.
+  
+  Para $f_{12}$ obtenemos mejor resultado que DE, y solo nos supera de la competición NBIPOP-aCMA-ES.
+  
+  Para $f_{13}$ volvemos a obtener resultados mejores que DE, y competitivos con los de la competición. De hecho, solo nos
+  vuelve a superar NBIPOP-aCMA-ES.
+  
+  De las funciones restantes, la única que supera a DE es $f_{15}$, que muestra resultados competitivos incluso con CEC2014.
+  
+  \subsubsection{D=30}
+  
+  Para $f_2$, $f_3$ y $f_7$ obtenemos resultados óptimos.
+  
+  Para $_1$ obtenemos mejores resultados que DE, y mejores que CoDE, EPSDE, JADE, SHADE11, SaDE, dynNP-jDE.
+  
+  Para $f_4$, $f_5$ y $f_6$ ganamos a DE. Además somos competitivos con muchas de las funciones de CEC2014.
+  
+  Para $f_8$ y $f_9$ obtenemos mejores resultados que DE, pero no resultamos competitivos en CEC2014.
+  
+  Para $f_{10}$ somos competitivos con DEBin, pero no con DExp.
+  
+  Con $f_{11}$ ganamos a DE y a algunas, pero pocas funciones de CEC2014.
+  
+  Con $f_{12}$, $f_{13}$ y $f_{15}$ somos competitivos en CEC2014, y en menor medida con $f_{14}$
+  
+  Con $f_{16}$ obtenemos peores resultados que todos los algoritmos de CEC2014, pero competimos con ellos en $f_{17}$
+  
+  Para el resto de funciones, ganamos a DE, pero no resultamos competitivos en CEC2014.
   
 \end{itemize}
 
@@ -753,7 +800,8 @@ Si cambiamos en \texttt{main} \texttt{ionAlgorithm()} por \texttt{ionAlgorithm\_
 
 
 
-\section{Conclusiones aprendidas}
+\section{Conclusiones}
+
 
 \section{Anexo: Resultados para comparar}
 
@@ -791,8 +839,8 @@ Si cambiamos en \texttt{main} \texttt{ionAlgorithm()} por \texttt{ionAlgorithm\_
   \textbf{DExp} es un \textit{differential evolution} con operador de mutación \texttt{rand/1/exp}
   
   \begin{table}[H]
-  \caption{Resultados de CEC2014}
-   \begin{adjustbox}{width=1.15\textwidth}
+  \caption{Resultados de CEC2014, D=10}
+  \begin{adjustbox}{width=1.15\textwidth}
   \centering
   \begin{tabular}{|c|r|r|r|r|r|r|r|r|r|r|}
   \hline
@@ -819,7 +867,40 @@ Si cambiamos en \texttt{main} \texttt{ionAlgorithm()} por \texttt{ionAlgorithm\_
   \textbf{f20} & 0.0239118917 & 0.2733571191 & 0.1650332637 & 0.3240730933 & 0.1848826079 & 1.3167908894 & 0.2433489516 & 0.1076009171 & 0.0414788094 & 0.8040941367 \\ \hline
   \end{tabular}
   \end{adjustbox}
-  \label{allresults}
+  \label{allresults10}
+  \end{table}
+  
+  
+  \begin{table}[H]
+  \caption{Resultados de CEC2014, D=30}
+  \begin{adjustbox}{width=1.15\textwidth}
+  \centering
+  \begin{tabular}{|c|r|r|r|r|r|r|r|r|r|r|}
+  \hline
+  \multicolumn{1}{|l|}{} & \multicolumn{1}{c|}{\textbf{CoDE}} & \multicolumn{1}{c|}{\textbf{D-SHADE}} & \multicolumn{1}{c|}{\textbf{EPSDE}} & \multicolumn{1}{c|}{\textbf{JADE}} & \multicolumn{1}{c|}{\textbf{L-SHADE}} & \multicolumn{1}{c|}{\textbf{NBIPOP-aCMA-ES}} & \multicolumn{1}{c|}{\textbf{SHADE11}} & \multicolumn{1}{c|}{\textbf{SaDE}} & \multicolumn{1}{c|}{\textbf{dynNP-jDE}} & \multicolumn{1}{c|}{\textbf{iCMAES-ILS}} \\ \hline
+  \textbf{f1} & 26331,8869575095 & 0,0050418117 & 24161,6368514507 & 447,8196375692 & 0 & 0 & 481,3446959104 & 298971,33918979 & 46510,1940625492 & 0 \\ \hline
+  \textbf{f2} & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\ \hline
+  \textbf{f3} & 0 & 0 & 0 & 0,0005629185 & 0 & 0 & 0 & 14,257932951 & 0 & 0 \\ \hline
+  \textbf{f4} & 2,5174323588 & 0,000000005 & 3,2126594868 & 0 & 0 & 0 & 0 & 37,1840031333 & 2,0351191349 & 0 \\ \hline
+  \textbf{f5} & 20,0638990081 & 20,014190075 & 20,3465183299 & 20,2871394796 & 20,1146763049 & 20,5171473664 & 20,1010978352 & 20,535686704 & 20,2912690121 & 19,999996584 \\ \hline
+  \textbf{f6} & 1,989059588 & 0,0592439663 & 18,8932679541 & 9,4228913131 & 1,38431029846092E-007 & 0,71355109 & 0,5289065467 & 5,459936197 & 1,1962049557 & 0,0039953306 \\ \hline
+  \textbf{f7} & 0,0001450204 & 0 & 0,002076039 & 0 & 0 & 0 & 0,0004833209 & 0,0123331042 & 0 & 0 \\ \hline
+  \textbf{f8} & 0 & 0 & 0 & 0 & 0 & 9,9779944845 & 0 & 0,0780360045 & 0 & 2,4170140021 \\ \hline
+  \textbf{f9} & 40,3709465644 & 8,7033130494 & 44,3622374613 & 26,1659720545 & 6,7848764763 & 3,2411292953 & 15,8317588869 & 38,1205435002 & 33,9322718406 & 2,5650257004 \\ \hline
+  \textbf{f10} & 0,5001944736 & 0,0351069653 & 0,2013990496 & 0,0053068668 & 0,0163288218 & 636,0031183409 & 0,0126582609 & 0,2691944263 & 0,0040822053 & 145,0062082025 \\ \hline
+  \textbf{f11} & 1951,2929891771 & 1303,967335214 & 3564,6341000583 & 1639,944130081 & 1229,4790938139 & 731,4947895676 & 1396,9447447931 & 3147,4624975955 & 1953,7416221137 & 73,8476351485 \\ \hline
+  \textbf{f12} & 0,0599885033 & 0,096652332 & 0,5251637371 & 0,271126043 & 0,1605767307 & 0,0132206013 & 0,1622655501 & 0,7941856261 & 0,3620864099 & 0,0282886171 \\ \hline
+  \textbf{f13} & 0,2312994696 & 0,1343522392 & 0,2429946066 & 0,2202961947 & 0,1241169481 & 0,0389138786 & 0,204013082 & 0,2515931325 & 0,2531034432 & 0,0295117437 \\ \hline
+  \textbf{f14} & 0,2388880533 & 0,2317340201 & 0,2781204939 & 0,2339873433 & 0,2417019554 & 0,3278191837 & 0,2246756645 & 0,2285316261 & 0,2656600071 & 0,1698163853 \\ \hline
+  \textbf{f15} & 3,1752326865 & 1,891847409 & 5,6692715458 & 3,0979738509 & 2,1463695397 & 2,1358244086 & 2,5641257305 & 4,1410046965 & 4,7558500578 & 2,511015745 \\ \hline
+  \textbf{f16} & 9,2624788512 & 8,5185217633 & 11,1464675089 & 9,3698400651 & 8,4990146629 & 10,6241345589 & 9,1477571713 & 10,9108972442 & 9,2242240552 & 10,8701658698 \\ \hline
+  \textbf{f17} & 1452,9858881834 & 210,3202094505 & 46053,184294654 & 9673,3938438023 & 187,5081400917 & 852,2059371945 & 1058,9064509057 & 11530,6982263603 & 957,7013954585 & 1046,7457137552 \\ \hline
+  \textbf{f18} & 13,4426166433 & 10,3642055724 & 331,8819351177 & 358,0523589079 & 5,9100668314 & 115,3533003598 & 49,8746042765 & 443,8338610018 & 21,0203929455 & 96,0895492581 \\ \hline
+  \textbf{f19} & 2,7041341224 & 3,5275106013 & 13,3001180287 & 4,4373187032 & 3,6817790085 & 5,6999352978 & 4,3057246012 & 4,0013010373 & 3,9067045066 & 6,4564439646 \\ \hline
+  \textbf{f20} & 10,9130962302 & 4,2016410845 & 50,0424672363 & 2885,3663233016 & 3,0818629205 & 24,0393009139 & 12,6424344838 & 124,5428468825 & 8,5281661356 & 33,5459350278 \\ \hline
+  \end{tabular}
+  \end{adjustbox}
+  \label{allresults30}
   \end{table}
   
 \end{document}
