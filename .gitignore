@@ -37,3 +37,4 @@ src/Makefile
 src/example_ls
 src/CMakeCache.txt
 src/cmake_install.cmake
+*.zip
