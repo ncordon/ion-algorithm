@@ -17,7 +17,7 @@ Original results of implementation of metaheuristic as described by their author
 
 
 
-||**D=10**|**D=30**|
+|   |**D=10**|**D=30**|
 |:--|-------:|-------:|
 |f1|19084554.669857|78738913.351420|
 |f2|16536.801547|13697676.211767|
@@ -42,7 +42,7 @@ Original results of implementation of metaheuristic as described by their author
 
 After the several improvements done:
 
-||**D=10**|**D=30**|
+|   |**D=10**|**D=30**|
 |:--|:-------|:-------|
 |f1|0.000000|153.994848|
 |f2|0.000000|0.000000|
